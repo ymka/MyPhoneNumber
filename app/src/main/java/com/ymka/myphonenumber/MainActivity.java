@@ -1,6 +1,8 @@
 package com.ymka.myphonenumber;
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -14,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -60,7 +63,10 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
 
     @Override
     public void onCopyPhoneNumber(String phoneNumber) {
-        Log.d("qwe", "Copy number " + phoneNumber);
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText(getString(R.string.clip_label), phoneNumber);
+        clipboard.setPrimaryClip(clipData);
+        Toast.makeText(this, R.string.phone_copy_toast, Toast.LENGTH_SHORT).show();
     }
 
     @Override

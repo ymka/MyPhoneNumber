@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyPhoneNumber</string>
+    <string name="clip_label">My phone number</string>
+    <string name="phone_copy_toast">Phone has been copied</string>
 </resources>
