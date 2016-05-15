@@ -2,4 +2,6 @@
     <string name="app_name">MyPhoneNumber</string>
     <string name="clip_label">My phone number</string>
     <string name="phone_copy_toast">Phone has been copied</string>
+    <string name="share_text_label">Send my phone number</string>
+    <string name="share_text_subject">My phone number</string>
 </resources>
