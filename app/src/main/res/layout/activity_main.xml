@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.ymka.myphonenumber.MainActivity">
 
-    <include layout="@layout/item_list"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recylerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
