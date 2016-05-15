@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#607D8B</color>
+    <color name="colorPrimaryDark">#455A64</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="phoneText">#414141</color>
+    <color name="divider">#EEEEEE</color>
+    <color name="operatorText">#FFFFFF</color>
+    <color name="operatorBackground">#00897B</color>
+    <color name="icon">#757575</color>
+</resources>
