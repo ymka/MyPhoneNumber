@@ -47,6 +47,7 @@
             android:paddingRight="@dimen/default_padding">
 
             <ImageButton
+                android:id="@+id/copyPhoneToClipBoard"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginRight="16dp"
@@ -54,6 +55,7 @@
                 android:src="@drawable/ic_content_copy_24dp"/>
 
             <ImageButton
+                android:id="@+id/sharePhone"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:background="?attr/selectableItemBackgroundBorderless"

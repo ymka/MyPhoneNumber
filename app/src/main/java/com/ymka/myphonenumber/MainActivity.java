@@ -20,7 +20,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapter.ActionListener {
 
     private PhoneNumbersAdapter mPhoneNumbersAdapter;
 
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         mPhoneNumbersAdapter = new PhoneNumbersAdapter();
+        mPhoneNumbersAdapter.setActionListener(this);
         recyclerView.setAdapter(mPhoneNumbersAdapter);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
             initData();
@@ -57,4 +58,13 @@ public class MainActivity extends AppCompatActivity {
         mPhoneNumbersAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onCopyPhoneNumber(String phoneNumber) {
+        Log.d("qwe", "Copy number " + phoneNumber);
+    }
+
+    @Override
+    public void onSharePhoneNumber(String phoneNumber) {
+        Log.d("qwe", "Share number " + phoneNumber);
+    }
 }

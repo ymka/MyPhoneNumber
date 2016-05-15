@@ -2,9 +2,9 @@ package com.ymka.myphonenumber;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.ymka.myphonenumber.holder.PhoneHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +12,17 @@ import java.util.List;
 /**
  * Created by Alexander Kondenko.
  */
-public class PhoneNumbersAdapter extends RecyclerView.Adapter<PhoneNumbersAdapter.Holder> {
+public class PhoneNumbersAdapter extends RecyclerView.Adapter<PhoneHolder> implements PhoneHolder.ClickListener {
 
     private final List<PhoneData> mPhoneData;
+    private ActionListener mActionListener;
 
     public PhoneNumbersAdapter() {
         mPhoneData = new ArrayList<>();
+    }
+
+    public void setActionListener(ActionListener actionListener) {
+        mActionListener = actionListener;
     }
 
     public void addPhonesData(List<PhoneData> phoneData) {
@@ -25,12 +30,12 @@ public class PhoneNumbersAdapter extends RecyclerView.Adapter<PhoneNumbersAdapte
     }
 
     @Override
-    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new Holder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false));
+    public PhoneHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new PhoneHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false), this);
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
+    public void onBindViewHolder(PhoneHolder holder, int position) {
         PhoneData phoneData = mPhoneData.get(position);
         holder.mPhoneNumber.setText(phoneData.getPhoneNumber());
         holder.mOperatorName.setText(phoneData.getOperatorName());
@@ -41,15 +46,17 @@ public class PhoneNumbersAdapter extends RecyclerView.Adapter<PhoneNumbersAdapte
         return mPhoneData.size();
     }
 
-    static class Holder extends RecyclerView.ViewHolder {
+    @Override
+    public void onCopyPhoneNumber(int position) {
+        if (mActionListener != null) {
+            mActionListener.onCopyPhoneNumber(mPhoneData.get(position).getPhoneNumber());
+        }
+    }
 
-        private final TextView mPhoneNumber;
-        private final TextView mOperatorName;
-
-        public Holder(View itemView) {
-            super(itemView);
-            mPhoneNumber = (TextView) itemView.findViewById(R.id.phoneNumber);
-            mOperatorName = (TextView) itemView.findViewById(R.id.operatorName);
+    @Override
+    public void onSharePhoneNumber(int position) {
+        if (mActionListener != null) {
+            mActionListener.onSharePhoneNumber(mPhoneData.get(position).getPhoneNumber());
         }
     }
 
