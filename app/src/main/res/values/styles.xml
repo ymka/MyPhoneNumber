@@ -13,4 +13,13 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/phoneText</item>
     </style>
+
+    <style name="WidgetButtonParent">
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="WidgetButton" parent="WidgetButtonParent">
+        <item name="android:background">?android:selectableItemBackground</item>
+    </style>
+
 </resources>
