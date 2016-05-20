@@ -48,12 +48,8 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     }
 
     private void initData() {
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        String line1Number = telephonyManager.getLine1Number();
-        String simOperatorName = telephonyManager.getSimOperatorName();
-        List<PhoneData> phonesData = new ArrayList<>();
-        phonesData.add(new PhoneData(line1Number, simOperatorName));
-        mPhoneNumbersAdapter.addPhonesData(phonesData);
+        PhoneNumberDelegate phoneNumberDelegate = new LegacyPhoneNumberDelegate((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE));
+        mPhoneNumbersAdapter.addPhonesData(phoneNumberDelegate.getSimsData());
         mPhoneNumbersAdapter.notifyDataSetChanged();
     }
 
