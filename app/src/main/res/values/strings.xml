@@ -4,4 +4,7 @@
     <string name="phone_copy_toast">Phone number has been copied</string>
     <string name="share_text_label">Send my phone number</string>
     <string name="share_text_subject">My phone number</string>
+    <string name="title_permission_dialog">Permission</string>
+    <string name="message_permission_dialog">Message permission dialog</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -16,11 +16,10 @@ import android.support.v7.widget.RecyclerView;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapter.ActionListener,
+                                                               PermissionDialog.ActionListener {
 
-public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapter.ActionListener {
-
+    private static final int sRequestAppSettings = 1233;
     private PhoneNumbersAdapter mPhoneNumbersAdapter;
 
     @Override
@@ -44,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             initData();
+        } else {
+            showPermissionDialog();
         }
     }
 
@@ -51,6 +52,11 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         PhoneNumberDelegate phoneNumberDelegate = new LegacyPhoneNumberDelegate((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE));
         mPhoneNumbersAdapter.addPhonesData(phoneNumberDelegate.getSimsData());
         mPhoneNumbersAdapter.notifyDataSetChanged();
+    }
+
+    private void showPermissionDialog() {
+        PermissionDialog dialog = new PermissionDialog();
+        dialog.show(getFragmentManager(), null);
     }
 
     @Override
@@ -69,5 +75,26 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         sendIntent.putExtra(Intent.EXTRA_TEXT, phoneNumber);
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, getString(R.string.share_text_label)));
+    }
+
+    @Override
+    public void onSettingsClicked(Intent intent) {
+        startActivityForResult(intent, sRequestAppSettings);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case sRequestAppSettings:
+                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                    initData();
+                }
+
+                break;
+
+            default:
+                // do nothing
+                break;
+        }
     }
 }
