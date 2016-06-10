@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -13,7 +14,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapter.ActionListener,
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recylerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        mPhoneNumbersAdapter = new PhoneNumbersAdapter();
+        mPhoneNumbersAdapter = new PhoneNumbersAdapter(this);
         mPhoneNumbersAdapter.setActionListener(this);
         recyclerView.setAdapter(mPhoneNumbersAdapter);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
@@ -49,7 +49,12 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     }
 
     private void initData() {
-        PhoneNumberDelegate phoneNumberDelegate = new LegacyPhoneNumberDelegate((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE));
+        PhoneNumberDelegate phoneNumberDelegate;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            phoneNumberDelegate = new DefaultPhoneNumberDelegate(this);
+        } else {
+            phoneNumberDelegate = new LegacyPhoneNumberDelegate(this);
+        }
         mPhoneNumbersAdapter.addPhonesData(phoneNumberDelegate.getSimsData());
         mPhoneNumbersAdapter.notifyDataSetChanged();
     }

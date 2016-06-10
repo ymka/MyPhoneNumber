@@ -7,6 +7,7 @@ public class PhoneData {
 
     private final String mPhoneNumber;
     private final String mOperatorName;
+    private int mColor = -1;
 
     public PhoneData(String phoneNumber, String operatorName) {
         mPhoneNumber = phoneNumber;
@@ -19,5 +20,13 @@ public class PhoneData {
 
     public String getOperatorName() {
         return mOperatorName;
+    }
+
+    public int getColor() {
+        return mColor;
+    }
+
+    public void setColor(int color) {
+        mColor = color;
     }
 }

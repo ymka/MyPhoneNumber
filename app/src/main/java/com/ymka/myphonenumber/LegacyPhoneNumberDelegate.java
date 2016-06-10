@@ -1,5 +1,6 @@
 package com.ymka.myphonenumber;
 
+import android.content.Context;
 import android.telephony.TelephonyManager;
 
 import java.util.ArrayList;
@@ -12,8 +13,8 @@ public class LegacyPhoneNumberDelegate implements PhoneNumberDelegate {
 
     private final TelephonyManager mTelephonyManager;
 
-    public LegacyPhoneNumberDelegate(TelephonyManager telephonyManager) {
-        mTelephonyManager = telephonyManager;
+    public LegacyPhoneNumberDelegate(Context context) {
+        mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     }
 
     @Override
