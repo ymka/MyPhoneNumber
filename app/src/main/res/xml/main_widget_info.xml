@@ -4,6 +4,6 @@
                     android:minHeight="40dp"
                     android:configure="com.ymka.myphonenumber.MyPhoneWidgetConfigureActivity"
                     android:initialLayout="@layout/widget_main"
-                    android:resizeMode="horizontal|vertical"
+                    android:resizeMode="horizontal"
                     android:previewImage="@android:drawable/ic_btn_speak_now">
 </appwidget-provider>
