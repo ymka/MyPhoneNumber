@@ -8,6 +8,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -34,20 +35,27 @@ public class MyPhoneWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         final int count = appWidgetIds.length;
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        WidgetController widgetController = new WidgetController(context);
         for (int i = 0; i < count; i++) {
             int widgetId = appWidgetIds[i];
+            Log.d("qwe", "On update " + widgetId);
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
-            String line1Number = telephonyManager.getLine1Number();
-            remoteViews.setTextViewText(R.id.textView, line1Number);
-            Intent intent = new Intent(context, MyPhoneWidgetProvider.class);
-            intent.setAction(ACTION_TOAST);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-            intent.putExtra(EXTRA_PHONE_NUMBER, line1Number);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PhoneData phoneData = widgetController.getPhoneDataByWidgetId(widgetId);
+            String number = phoneData.getPhoneNumber();
+            remoteViews.setTextViewText(R.id.textView, number);
+            PendingIntent pendingIntent = getPendingIntent(context, widgetId, number);
             remoteViews.setOnClickPendingIntent(R.id.copyPhoneToClipBoard, pendingIntent);
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
         }
+    }
+
+    public static PendingIntent getPendingIntent(Context context, int widgetId, String line1Number) {
+        Intent intent = new Intent(context, MyPhoneWidgetProvider.class);
+        intent.setAction(ACTION_TOAST);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+        intent.putExtra(EXTRA_PHONE_NUMBER, line1Number);
+
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 }

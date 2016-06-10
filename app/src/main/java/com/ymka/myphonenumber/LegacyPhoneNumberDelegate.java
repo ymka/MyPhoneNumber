@@ -1,6 +1,7 @@
 package com.ymka.myphonenumber;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 
 import java.util.ArrayList;
@@ -24,16 +25,30 @@ public class LegacyPhoneNumberDelegate implements PhoneNumberDelegate {
 
     @Override
     public List<PhoneData> getSimsData() {
-        List<PhoneData> phonesData = null;
+        List<PhoneData> phonesData = new ArrayList<>();
         if (hasActiveSim()) {
-            String line1Number = mTelephonyManager.getLine1Number();
-            String simOperatorName = mTelephonyManager.getSimOperatorName();
-            String countryIso = mTelephonyManager.getSimCountryIso();
-            phonesData = new ArrayList<>();
-            phonesData.add(new PhoneData(line1Number, simOperatorName, countryIso));
-
+            phonesData.add(getPhoneData());
         }
 
         return phonesData;
+    }
+
+    private PhoneData getPhoneData() {
+        String line1Number = mTelephonyManager.getLine1Number();
+        String simOperatorName = mTelephonyManager.getSimOperatorName();
+        String countryIso = mTelephonyManager.getSimCountryIso();
+
+        return new PhoneData(line1Number, simOperatorName, countryIso);
+    }
+
+    @Nullable
+    @Override
+    public PhoneData getSimBySlotIndex(int index) {
+        PhoneData phoneData = null;
+        if (hasActiveSim()) {
+            phoneData = getPhoneData();
+        }
+
+        return phoneData;
     }
 }

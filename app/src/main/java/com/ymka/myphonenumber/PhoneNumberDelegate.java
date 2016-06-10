@@ -10,7 +10,8 @@ import java.util.List;
 public interface PhoneNumberDelegate {
 
     boolean hasActiveSim();
-    @Nullable
     List<PhoneData> getSimsData();
+    @Nullable
+    PhoneData getSimBySlotIndex(int index);
 
 }

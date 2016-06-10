@@ -7,4 +7,7 @@
     <string name="title_permission_dialog">Permission</string>
     <string name="message_permission_dialog">Message permission dialog</string>
     <string name="settings">Settings</string>
+    <string name="no_active_sim_card">There is no active sim card</string>
+    <string name="chosen_sim">Choose sim card:</string>
+    <string name="phone_number">Phone number:</string>
 </resources>
