@@ -28,8 +28,10 @@ public class LegacyPhoneNumberDelegate implements PhoneNumberDelegate {
         if (hasActiveSim()) {
             String line1Number = mTelephonyManager.getLine1Number();
             String simOperatorName = mTelephonyManager.getSimOperatorName();
+            String countryIso = mTelephonyManager.getSimCountryIso();
             phonesData = new ArrayList<>();
-            phonesData.add(new PhoneData(line1Number, simOperatorName));
+            phonesData.add(new PhoneData(line1Number, simOperatorName, countryIso));
+
         }
 
         return phonesData;

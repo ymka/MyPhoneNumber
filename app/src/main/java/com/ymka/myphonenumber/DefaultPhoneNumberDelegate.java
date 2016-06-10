@@ -34,7 +34,7 @@ public class DefaultPhoneNumberDelegate implements PhoneNumberDelegate {
         List<PhoneData> phoneDataList = new ArrayList<>(infoList.size());
         for (int i = 0; i < infoList.size(); i++) {
             SubscriptionInfo info = infoList.get(i);
-            PhoneData phoneData = new PhoneData(info.getNumber(), info.getDisplayName().toString());
+            PhoneData phoneData = new PhoneData(info.getNumber(), info.getDisplayName().toString(), info.getCountryIso());
             phoneData.setColor(info.getIconTint());
             phoneDataList.add(phoneData);
         }
