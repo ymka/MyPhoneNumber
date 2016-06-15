@@ -1,10 +1,15 @@
 package com.ymka.myphonenumber;
 
+import android.Manifest;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,15 +36,23 @@ public class MyPhoneWidgetConfigureActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             mWidgetController = new WidgetController(this);
-            if (mWidgetController.hasActiveSim()) {
-                initLayoutWithActiveSimCard(extras);
-            } else {
-                setContentView(R.layout.activity_widget_configure_no_active_sim);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                initLayout();
+            } else if (savedInstanceState == null) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
             }
         }
     }
 
-    private void initLayoutWithActiveSimCard(Bundle extras) {
+    private void initLayout() {
+        if (mWidgetController.hasActiveSim()) {
+            initLayoutWithActiveSimCard();
+        } else {
+            setContentView(R.layout.activity_widget_configure_no_active_sim);
+        }
+    }
+
+    private void initLayoutWithActiveSimCard() {
         setContentView(R.layout.activity_widget_configure);
         mPhoneNumber = (TextView) findViewById(R.id.phoneNumber);
         mPhoneDataList = mWidgetController.getPhoneDataList();
@@ -89,6 +102,15 @@ public class MyPhoneWidgetConfigureActivity extends AppCompatActivity {
             Intent resultValue = new Intent();
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
             setResult(RESULT_OK, resultValue);
+            finish();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            initLayout();
+        } else {
             finish();
         }
     }
