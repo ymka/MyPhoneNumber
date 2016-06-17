@@ -33,9 +33,13 @@ public class WidgetController {
         editor.putInt(String.valueOf(id), slotIndex).apply();
     }
 
-    public void removeWidget(int id) {
+    public void removeWidget(int... ids) {
         SharedPreferences.Editor editor = mPreferences.edit();
-        editor.remove(String.valueOf(id)).apply();
+        for (int i = 0; i < ids.length; i++) {
+            editor.remove(String.valueOf(ids[i]));
+        }
+
+        editor.apply();
     }
 
     public int getActiveSimsCount() {

@@ -64,4 +64,9 @@ public class MyPhoneWidgetProvider extends AppWidgetProvider {
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        WidgetController widgetController = new WidgetController(context);
+        widgetController.removeWidget(appWidgetIds[0]);
+    }
 }
