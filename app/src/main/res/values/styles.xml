@@ -22,4 +22,13 @@
         <item name="android:background">?android:selectableItemBackground</item>
     </style>
 
+    <style name="RequestText" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="RequestPermissionText" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textColor">@color/selector_request_permission</item>
+        <item name="android:textSize">@dimen/request_permissions_text</item>
+    </style>
+
 </resources>

@@ -1,7 +1,8 @@
 package com.ymka.myphonenumber;
 
-import android.os.Build;
-import android.telephony.PhoneNumberUtils;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 
 /**
  * Created by Alexander Kondenko.
@@ -21,12 +22,16 @@ public class PhoneData {
 
     public String getPhoneNumber() {
         String phoneNumber = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            phoneNumber = PhoneNumberUtils.formatNumber(mPhoneNumber, mCountryIso);
+        PhoneNumberUtil numberUtil = PhoneNumberUtil.getInstance();
+        try {
+            Phonenumber.PhoneNumber parse = numberUtil.parse(mPhoneNumber, mCountryIso.toUpperCase());
+            phoneNumber = numberUtil.formatOutOfCountryCallingNumber(parse, mCountryIso.toUpperCase());
+        } catch (NumberParseException e) {
+            e.printStackTrace();
         }
 
         if (phoneNumber == null) {
-            phoneNumber = PhoneNumberUtils.formatNumber(mPhoneNumber);
+            phoneNumber = mPhoneNumber;
         }
 
         return phoneNumber;

@@ -10,4 +10,7 @@
     <string name="no_active_sim_card">There is no active sim card</string>
     <string name="chosen_sim">Choose sim card:</string>
     <string name="phone_number">Phone number:</string>
+    <string name="label_no_active_card">You have no one active SIM-card</string>
+    <string name="label_request_permissions">Phone permissions are needed for displaying your phone number and name of operator\n%s</string>
+    <string name="request_permissions">Request permissions</string>
 </resources>

@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.text.style.TextAppearanceSpan;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapter.ActionListener,
@@ -57,6 +67,13 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         }
         mPhoneNumbersAdapter.addPhonesData(phoneNumberDelegate.getSimsData());
         mPhoneNumbersAdapter.notifyDataSetChanged();
+        TextView textLabel = (TextView) findViewById(R.id.textLabel);
+        if (mPhoneNumbersAdapter.getItemCount() == 0) {
+            textLabel.setVisibility(View.VISIBLE);
+            textLabel.setText(R.string.label_no_active_card);
+        } else {
+            textLabel.setVisibility(View.GONE);
+        }
     }
 
     private void showPermissionDialog() {
@@ -88,11 +105,36 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     }
 
     @Override
+    public void onPisitiveButtonClicked() {
+        showRequestPermissionLabel();
+    }
+
+    private void showRequestPermissionLabel() {
+        String requestText = getString(R.string.request_permissions);
+        String mainText = getString(R.string.label_request_permissions, requestText);
+        SpannableStringBuilder builder = new SpannableStringBuilder(mainText);
+        int length = mainText.length() - requestText.length();
+        builder.setSpan(new TextAppearanceSpan(MainActivity.this, R.style.RequestText), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        builder.setSpan(new TextAppearanceSpan(MainActivity.this, R.style.RequestPermissionText), length, mainText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        TextView requestLabel = (TextView) findViewById(R.id.textLabel);
+        requestLabel.setText(builder);
+        requestLabel.setVisibility(View.VISIBLE);
+        requestLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
+            }
+        });
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case sRequestAppSettings:
                 if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
                     initData();
+                } else {
+                    showRequestPermissionLabel();
                 }
 
                 break;
