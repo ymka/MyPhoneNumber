@@ -96,8 +96,10 @@ public class MyPhoneWidgetConfigureActivity extends AppCompatActivity {
             RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.widget_main);
             String number = mPhoneDataList.get(mSelectedPosition).getPhoneNumber();
             remoteViews.setTextViewText(R.id.textView, number);
-            PendingIntent pendingIntent = MyPhoneWidgetProvider.getPendingIntent(this, widgetId, number);
+            PendingIntent pendingIntent = MyPhoneWidgetProvider.getCopyToClipboardPendingIntent(this, widgetId, number);
             remoteViews.setOnClickPendingIntent(R.id.copyPhoneToClipBoard, pendingIntent);
+            PendingIntent sharePhoneIntent = MyPhoneWidgetProvider.getSharePhonePendingIntent(MyPhoneWidgetConfigureActivity.this, number);
+            remoteViews.setOnClickPendingIntent(R.id.sharePhone, sharePhoneIntent);
             widgetManager.updateAppWidget(widgetId, remoteViews);
             Intent resultValue = new Intent();
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
