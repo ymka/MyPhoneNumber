@@ -25,7 +25,7 @@ public class PhoneData {
         PhoneNumberUtil numberUtil = PhoneNumberUtil.getInstance();
         try {
             Phonenumber.PhoneNumber parse = numberUtil.parse(mPhoneNumber, mCountryIso.toUpperCase());
-            phoneNumber = numberUtil.formatOutOfCountryCallingNumber(parse, mCountryIso.toUpperCase());
+            phoneNumber = numberUtil.formatNumberForMobileDialing(parse, "US", true);
         } catch (NumberParseException e) {
             e.printStackTrace();
         }
