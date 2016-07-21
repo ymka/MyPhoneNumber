@@ -26,6 +26,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import timber.log.Timber;
+
 public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapter.ActionListener,
                                                                PermissionDialog.ActionListener {
 
@@ -42,7 +44,9 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         mPhoneNumbersAdapter = new PhoneNumbersAdapter(this);
         mPhoneNumbersAdapter.setActionListener(this);
         recyclerView.setAdapter(mPhoneNumbersAdapter);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+        boolean isPermissionGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
+        Timber.d("On create. Permission is granted %s", isPermissionGranted);
+        if (isPermissionGranted) {
             initData();
         } else if (savedInstanceState == null) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
@@ -61,10 +65,14 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     private void initData() {
         PhoneNumberDelegate phoneNumberDelegate;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            Timber.d("Use default delegate");
             phoneNumberDelegate = new DefaultPhoneNumberDelegate(this);
         } else {
+            Timber.d("Use legacy delegate");
             phoneNumberDelegate = new LegacyPhoneNumberDelegate(this);
         }
+
+        Timber.d("Sims count %s", phoneNumberDelegate.getSimsData().size());
         mPhoneNumbersAdapter.addPhonesData(phoneNumberDelegate.getSimsData());
         mPhoneNumbersAdapter.notifyDataSetChanged();
         TextView textLabel = (TextView) findViewById(R.id.textLabel);
@@ -77,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     }
 
     private void showPermissionDialog() {
+        Timber.d("Show permission dialog");
         PermissionDialog dialog = new PermissionDialog();
         dialog.show(getFragmentManager(), null);
     }

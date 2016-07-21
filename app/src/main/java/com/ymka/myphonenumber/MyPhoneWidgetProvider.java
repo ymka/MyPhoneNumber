@@ -13,6 +13,8 @@ import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import timber.log.Timber;
+
 /**
  * Created by Alexander Kondenko.
  */
@@ -52,7 +54,9 @@ public class MyPhoneWidgetProvider extends AppWidgetProvider {
             int widgetId = appWidgetIds[i];
             PhoneData phoneData = widgetController.getPhoneDataByWidgetId(widgetId);
             RemoteViews remoteViews;
-            if (phoneData != null) {
+            boolean isPhoneDataPresent = phoneData != null;
+            Timber.d("Phone data is present %s for widget", isPhoneDataPresent);
+            if (isPhoneDataPresent) {
                 remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
                 String number = phoneData.getPhoneNumber();
                 remoteViews.setTextViewText(R.id.textView, number);
