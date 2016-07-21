@@ -4,23 +4,21 @@ import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.widget.TextView;
@@ -31,6 +29,7 @@ import timber.log.Timber;
 public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapter.ActionListener,
                                                                PermissionDialog.ActionListener {
 
+    private static final String sKeyShowWarningDialog = "com.ymka.myphonenumber.MainActivity.KeyShowWarningDialog";
     private static final int sRequestAppSettings = 1233;
     private PhoneNumbersAdapter mPhoneNumbersAdapter;
 
@@ -64,12 +63,19 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
 
     private void initData() {
         PhoneNumberDelegate phoneNumberDelegate;
+        boolean showWarning = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             Timber.d("Use default delegate");
             phoneNumberDelegate = new DefaultPhoneNumberDelegate(this);
         } else {
             Timber.d("Use legacy delegate");
             phoneNumberDelegate = new LegacyPhoneNumberDelegate(this);
+            showWarning = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(sKeyShowWarningDialog, true);
+        }
+
+        if (showWarning) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(sKeyShowWarningDialog, false).apply();
+            showWarningDialog();
         }
 
         Timber.d("Sims count %s", phoneNumberDelegate.getSimsData().size());
@@ -82,6 +88,20 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         } else {
             textLabel.setVisibility(View.GONE);
         }
+    }
+
+    private void showWarningDialog() {
+        Timber.d("Show warning dialog");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.warning_dual_sim_message);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
     }
 
     private void showPermissionDialog() {
