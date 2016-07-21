@@ -18,18 +18,25 @@ import android.widget.Toast;
  */
 public class MyPhoneWidgetProvider extends AppWidgetProvider {
 
-    public static final String ACTION_COPY_TO_CLIPBOARD = "com.ymka.myphonenumber.MyPhoneWidgetProvider.ACTION_COPY_TO_CLIPBOARD";
-    public static final String EXTRA_PHONE_NUMBER = "com.ymka.myphonenumber.MyPhoneWidgetProvider.EXTRA_PHONE_NUMBER";
+    private static final String sExtraPhoneNumber = "com.ymka.myphonenumber.MyPhoneWidgetProvider.ExtraPhoneNumber";
+    private static final String sActionCopyToClipboard = "com.ymka.myphonenumber.MyPhoneWidgetProvider.ActionCopyToClipboard";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        if (intent.getAction().equals(ACTION_COPY_TO_CLIPBOARD)) {
-            String phoneNumber = intent.getStringExtra(EXTRA_PHONE_NUMBER);
-            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clipData = ClipData.newPlainText(context.getString(R.string.clip_label), phoneNumber);
-            clipboard.setPrimaryClip(clipData);
-            Toast.makeText(context, R.string.phone_copy_toast, Toast.LENGTH_SHORT).show();
+        String action = intent.getAction();
+        if (action != null) {
+            switch (action) {
+                case sActionCopyToClipboard:
+                    String phoneNumber = intent.getStringExtra(sExtraPhoneNumber);
+                    ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clipData = ClipData.newPlainText(context.getString(R.string.clip_label), phoneNumber);
+                    clipboard.setPrimaryClip(clipData);
+                    Toast.makeText(context, R.string.phone_copy_toast, Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -43,23 +50,29 @@ public class MyPhoneWidgetProvider extends AppWidgetProvider {
         WidgetController widgetController = new WidgetController(context);
         for (int i = 0; i < count; i++) {
             int widgetId = appWidgetIds[i];
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
             PhoneData phoneData = widgetController.getPhoneDataByWidgetId(widgetId);
-            String number = phoneData.getPhoneNumber();
-            remoteViews.setTextViewText(R.id.textView, number);
-            PendingIntent pendingIntent = getCopyToClipboardPendingIntent(context, widgetId, number);
-            remoteViews.setOnClickPendingIntent(R.id.copyPhoneToClipBoard, pendingIntent);
-            PendingIntent sharePhoneIntent = getSharePhonePendingIntent(context, number);
-            remoteViews.setOnClickPendingIntent(R.id.sharePhone, sharePhoneIntent);
+            RemoteViews remoteViews;
+            if (phoneData != null) {
+                remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
+                String number = phoneData.getPhoneNumber();
+                remoteViews.setTextViewText(R.id.textView, number);
+                PendingIntent pendingIntent = getCopyToClipboardPendingIntent(context, widgetId, number);
+                remoteViews.setOnClickPendingIntent(R.id.copyPhoneToClipBoard, pendingIntent);
+                PendingIntent sharePhoneIntent = getSharePhonePendingIntent(context, number);
+                remoteViews.setOnClickPendingIntent(R.id.sharePhone, sharePhoneIntent);
+            } else {
+                remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_buttons_disabled);
+            }
+
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
         }
     }
 
     public static PendingIntent getCopyToClipboardPendingIntent(Context context, int widgetId, String line1Number) {
         Intent intent = new Intent(context, MyPhoneWidgetProvider.class);
-        intent.setAction(ACTION_COPY_TO_CLIPBOARD);
+        intent.setAction(sActionCopyToClipboard);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-        intent.putExtra(EXTRA_PHONE_NUMBER, line1Number);
+        intent.putExtra(sExtraPhoneNumber, line1Number);
 
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
