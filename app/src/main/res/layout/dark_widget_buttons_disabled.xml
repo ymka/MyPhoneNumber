@@ -4,13 +4,15 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_vertical"
-              android:background="#55000000">
+              android:background="@drawable/dark_widget_background">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:text="@string/sim_card_absent"
+        android:textColor="@color/white_icon"
         android:gravity="center"
         android:textStyle="bold"/>
 
@@ -19,13 +21,15 @@
         android:layout_width="@dimen/default_min_clickable_element_size"
         android:layout_height="@dimen/default_min_clickable_element_size"
         style="@style/WidgetButton"
-        android:src="@drawable/ic_content_copy_24dp"/>
+        android:clickable="false"
+        android:src="@drawable/ic_content_copy_white_widget_24dp"/>
 
     <ImageButton
         android:id="@+id/sharePhone"
         android:layout_width="@dimen/default_min_clickable_element_size"
         android:layout_height="@dimen/default_min_clickable_element_size"
         style="@style/WidgetButton"
-        android:src="@drawable/ic_share_24dp"/>
+        android:clickable="false"
+        android:src="@drawable/ic_share_white_widget_24dp"/>
 
 </LinearLayout>

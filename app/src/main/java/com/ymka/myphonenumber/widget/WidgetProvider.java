@@ -1,4 +1,4 @@
-package com.ymka.myphonenumber;
+package com.ymka.myphonenumber.widget;
 
 import android.Manifest;
 import android.app.PendingIntent;
@@ -13,15 +13,19 @@ import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.ymka.myphonenumber.PhoneData;
+import com.ymka.myphonenumber.R;
+import com.ymka.myphonenumber.WidgetController;
+
 import timber.log.Timber;
 
 /**
  * Created by Alexander Kondenko.
  */
-public class MyPhoneWidgetProvider extends AppWidgetProvider {
+public abstract class WidgetProvider extends AppWidgetProvider {
 
-    private static final String sExtraPhoneNumber = "com.ymka.myphonenumber.MyPhoneWidgetProvider.ExtraPhoneNumber";
-    private static final String sActionCopyToClipboard = "com.ymka.myphonenumber.MyPhoneWidgetProvider.ActionCopyToClipboard";
+    private static final String sExtraPhoneNumber = "com.ymka.myphonenumber.widget.WidgetProvider.ExtraPhoneNumber";
+    private static final String sActionCopyToClipboard = "com.ymka.myphonenumber.widget.WidgetProvider.ActionCopyToClipboard";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -57,7 +61,7 @@ public class MyPhoneWidgetProvider extends AppWidgetProvider {
             boolean isPhoneDataPresent = phoneData != null;
             Timber.d("Phone data is present %s for widget", isPhoneDataPresent);
             if (isPhoneDataPresent) {
-                remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
+                remoteViews = new RemoteViews(context.getPackageName(), getLayoutWidgetId());
                 String number = phoneData.getPhoneNumber();
                 remoteViews.setTextViewText(R.id.textView, number);
                 PendingIntent pendingIntent = getCopyToClipboardPendingIntent(context, widgetId, number);
@@ -65,7 +69,7 @@ public class MyPhoneWidgetProvider extends AppWidgetProvider {
                 PendingIntent sharePhoneIntent = getSharePhonePendingIntent(context, number);
                 remoteViews.setOnClickPendingIntent(R.id.sharePhone, sharePhoneIntent);
             } else {
-                remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_buttons_disabled);
+                remoteViews = new RemoteViews(context.getPackageName(), getLayoutDisabledWidgetId());
             }
 
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
@@ -73,7 +77,7 @@ public class MyPhoneWidgetProvider extends AppWidgetProvider {
     }
 
     public static PendingIntent getCopyToClipboardPendingIntent(Context context, int widgetId, String line1Number) {
-        Intent intent = new Intent(context, MyPhoneWidgetProvider.class);
+        Intent intent = new Intent(context, WidgetProvider.class);
         intent.setAction(sActionCopyToClipboard);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         intent.putExtra(sExtraPhoneNumber, line1Number);
@@ -96,4 +100,8 @@ public class MyPhoneWidgetProvider extends AppWidgetProvider {
         WidgetController widgetController = new WidgetController(context);
         widgetController.removeWidget(appWidgetIds[0]);
     }
+
+    protected abstract int getLayoutWidgetId();
+
+    protected abstract int getLayoutDisabledWidgetId();
 }

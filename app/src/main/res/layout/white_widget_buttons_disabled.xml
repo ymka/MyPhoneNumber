@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_vertical"
-              android:background="#55000000">
+              android:background="@drawable/dark_widget_background">
 
     <TextView
         android:id="@+id/textView"
@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="@string/sim_card_absent"
+        android:textColor="@color/dark_icon"
         android:gravity="center"
         android:textStyle="bold"/>
 
@@ -21,7 +22,7 @@
         android:layout_height="@dimen/default_min_clickable_element_size"
         style="@style/WidgetButton"
         android:clickable="false"
-        android:src="@drawable/ic_content_copy_24dp"/>
+        android:src="@drawable/ic_content_copy_dark_widget_24dp"/>
 
     <ImageButton
         android:id="@+id/sharePhone"
@@ -29,6 +30,6 @@
         android:layout_height="@dimen/default_min_clickable_element_size"
         style="@style/WidgetButton"
         android:clickable="false"
-        android:src="@drawable/ic_share_24dp"/>
+        android:src="@drawable/ic_share_dark_widget_24dp"/>
 
 </LinearLayout>

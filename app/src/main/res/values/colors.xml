@@ -10,7 +10,11 @@
     <color name="operatorBackground2">#FB8C00</color>
     <color name="operatorBackground3">#43A047</color>
     <color name="icon">#757575</color>
+    <color name="white_icon">#e9e9e9</color>
+    <color name="dark_icon">#0e0e0e</color>
     <color name="primary_text">#212121</color>
     <color name="request_permissions_text">#2E7D32</color>
     <color name="request_permissions_text_pressed">#19451c</color>
+    <color name="dark_widget_background">#cc212121</color>
+    <color name="white_widget_background">#ccffffff</color>
 </resources>

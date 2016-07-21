@@ -18,6 +18,8 @@ import android.widget.RemoteViews;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.ymka.myphonenumber.widget.WidgetProvider;
+
 import java.util.List;
 
 /**
@@ -93,12 +95,12 @@ public class MyPhoneWidgetConfigureActivity extends AppCompatActivity {
             int widgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
             mWidgetController.addWidgetForSimSlot(widgetId, mSelectedPosition);
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
-            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.widget_main);
+            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.dark_widget_main);
             String number = mPhoneDataList.get(mSelectedPosition).getPhoneNumber();
             remoteViews.setTextViewText(R.id.textView, number);
-            PendingIntent pendingIntent = MyPhoneWidgetProvider.getCopyToClipboardPendingIntent(this, widgetId, number);
+            PendingIntent pendingIntent = WidgetProvider.getCopyToClipboardPendingIntent(this, widgetId, number);
             remoteViews.setOnClickPendingIntent(R.id.copyPhoneToClipBoard, pendingIntent);
-            PendingIntent sharePhoneIntent = MyPhoneWidgetProvider.getSharePhonePendingIntent(MyPhoneWidgetConfigureActivity.this, number);
+            PendingIntent sharePhoneIntent = WidgetProvider.getSharePhonePendingIntent(MyPhoneWidgetConfigureActivity.this, number);
             remoteViews.setOnClickPendingIntent(R.id.sharePhone, sharePhoneIntent);
             widgetManager.updateAppWidget(widgetId, remoteViews);
             Intent resultValue = new Intent();

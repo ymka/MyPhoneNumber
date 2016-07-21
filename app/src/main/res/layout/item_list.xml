@@ -30,8 +30,7 @@
             android:paddingLeft="@dimen/default_padding"
             android:paddingRight="@dimen/default_padding"
             android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:text="+380939110299"/>
+            android:paddingBottom="16dp"/>
 
         <View android:layout_width="match_parent"
               android:layout_height="1dp"
