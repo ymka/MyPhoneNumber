@@ -1,4 +1,4 @@
-package com.ymka.myphonenumber;
+package com.ymka.myphonenumber.widget;
 
 import android.Manifest;
 import android.app.PendingIntent;
@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -18,14 +19,16 @@ import android.widget.RemoteViews;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.ymka.myphonenumber.widget.WidgetProvider;
+import com.ymka.myphonenumber.PhoneData;
+import com.ymka.myphonenumber.R;
+import com.ymka.myphonenumber.WidgetController;
 
 import java.util.List;
 
 /**
  * Created by Alexander Kondenko.
  */
-public class MyPhoneWidgetConfigureActivity extends AppCompatActivity {
+public abstract class BasePhoneWidgetConfigureActivity extends AppCompatActivity {
 
     private WidgetController mWidgetController;
     private TextView mPhoneNumber;
@@ -95,12 +98,12 @@ public class MyPhoneWidgetConfigureActivity extends AppCompatActivity {
             int widgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
             mWidgetController.addWidgetForSimSlot(widgetId, mSelectedPosition);
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
-            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.dark_widget_main);
+            RemoteViews remoteViews = new RemoteViews(getPackageName(), getWidgetLayoutId());
             String number = mPhoneDataList.get(mSelectedPosition).getPhoneNumber();
             remoteViews.setTextViewText(R.id.textView, number);
             PendingIntent pendingIntent = WidgetProvider.getCopyToClipboardPendingIntent(this, widgetId, number);
             remoteViews.setOnClickPendingIntent(R.id.copyPhoneToClipBoard, pendingIntent);
-            PendingIntent sharePhoneIntent = WidgetProvider.getSharePhonePendingIntent(MyPhoneWidgetConfigureActivity.this, number);
+            PendingIntent sharePhoneIntent = WidgetProvider.getSharePhonePendingIntent(BasePhoneWidgetConfigureActivity.this, number);
             remoteViews.setOnClickPendingIntent(R.id.sharePhone, sharePhoneIntent);
             widgetManager.updateAppWidget(widgetId, remoteViews);
             Intent resultValue = new Intent();
@@ -118,4 +121,7 @@ public class MyPhoneWidgetConfigureActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    @LayoutRes
+    protected abstract int getWidgetLayoutId();
 }

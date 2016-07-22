@@ -9,6 +9,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.annotation.LayoutRes;
 import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -101,7 +102,9 @@ public abstract class WidgetProvider extends AppWidgetProvider {
         widgetController.removeWidget(appWidgetIds[0]);
     }
 
+    @LayoutRes
     protected abstract int getLayoutWidgetId();
 
+    @LayoutRes
     protected abstract int getLayoutDisabledWidgetId();
 }

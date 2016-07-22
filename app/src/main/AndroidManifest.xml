@@ -19,7 +19,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MyPhoneWidgetConfigureActivity">
+        <activity android:name=".widget.DarkPhoneWidgetConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".widget.WhitePhoneWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
