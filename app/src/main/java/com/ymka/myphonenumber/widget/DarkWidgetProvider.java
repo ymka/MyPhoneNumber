@@ -17,4 +17,9 @@ public class DarkWidgetProvider extends WidgetProvider {
         return R.layout.dark_widget_buttons_disabled;
     }
 
+    @Override
+    protected Class<? extends WidgetProvider> getProviderClass() {
+        return DarkWidgetProvider.class;
+    }
+
 }

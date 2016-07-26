@@ -65,7 +65,7 @@ public abstract class WidgetProvider extends AppWidgetProvider {
                 remoteViews = new RemoteViews(context.getPackageName(), getLayoutWidgetId());
                 String number = phoneData.getPhoneNumber();
                 remoteViews.setTextViewText(R.id.textView, number);
-                PendingIntent pendingIntent = getCopyToClipboardPendingIntent(context, widgetId, number);
+                PendingIntent pendingIntent = getCopyToClipboardPendingIntent(context, widgetId, number, getProviderClass());
                 remoteViews.setOnClickPendingIntent(R.id.copyPhoneToClipBoard, pendingIntent);
                 PendingIntent sharePhoneIntent = getSharePhonePendingIntent(context, number);
                 remoteViews.setOnClickPendingIntent(R.id.sharePhone, sharePhoneIntent);
@@ -77,8 +77,8 @@ public abstract class WidgetProvider extends AppWidgetProvider {
         }
     }
 
-    public static PendingIntent getCopyToClipboardPendingIntent(Context context, int widgetId, String line1Number) {
-        Intent intent = new Intent(context, WidgetProvider.class);
+    public static PendingIntent getCopyToClipboardPendingIntent(Context context, int widgetId, String line1Number, Class<? extends WidgetProvider> providerClass) {
+        Intent intent = new Intent(context, providerClass);
         intent.setAction(sActionCopyToClipboard);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         intent.putExtra(sExtraPhoneNumber, line1Number);
@@ -107,4 +107,6 @@ public abstract class WidgetProvider extends AppWidgetProvider {
 
     @LayoutRes
     protected abstract int getLayoutDisabledWidgetId();
+
+    protected abstract Class<? extends  WidgetProvider> getProviderClass();
 }

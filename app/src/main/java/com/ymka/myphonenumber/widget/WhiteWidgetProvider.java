@@ -15,4 +15,9 @@ public class WhiteWidgetProvider extends WidgetProvider {
     protected int getLayoutDisabledWidgetId() {
         return R.layout.white_widget_buttons_disabled;
     }
+
+    @Override
+    protected Class<? extends WidgetProvider> getProviderClass() {
+        return WhiteWidgetProvider.class;
+    }
 }

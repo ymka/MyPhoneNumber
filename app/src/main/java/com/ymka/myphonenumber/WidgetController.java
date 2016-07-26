@@ -8,8 +8,7 @@ import android.preference.PreferenceManager;
 import java.util.List;
 
 /**
- * Created by Alexander Kondenko on 10.06.16.
- * Copyright (c) 2015 MyLifeOrganized. All rights reserved.
+ * Created by Alexander Kondenko.
  */
 public class WidgetController {
 

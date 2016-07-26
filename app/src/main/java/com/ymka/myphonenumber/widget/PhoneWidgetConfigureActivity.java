@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Created by Alexander Kondenko.
  */
-public abstract class BasePhoneWidgetConfigureActivity extends AppCompatActivity {
+public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
 
     private WidgetController mWidgetController;
     private TextView mPhoneNumber;
@@ -101,9 +101,9 @@ public abstract class BasePhoneWidgetConfigureActivity extends AppCompatActivity
             RemoteViews remoteViews = new RemoteViews(getPackageName(), getWidgetLayoutId());
             String number = mPhoneDataList.get(mSelectedPosition).getPhoneNumber();
             remoteViews.setTextViewText(R.id.textView, number);
-            PendingIntent pendingIntent = WidgetProvider.getCopyToClipboardPendingIntent(this, widgetId, number);
+            PendingIntent pendingIntent = WidgetProvider.getCopyToClipboardPendingIntent(this, widgetId, number, getProviderClass());
             remoteViews.setOnClickPendingIntent(R.id.copyPhoneToClipBoard, pendingIntent);
-            PendingIntent sharePhoneIntent = WidgetProvider.getSharePhonePendingIntent(BasePhoneWidgetConfigureActivity.this, number);
+            PendingIntent sharePhoneIntent = WidgetProvider.getSharePhonePendingIntent(PhoneWidgetConfigureActivity.this, number);
             remoteViews.setOnClickPendingIntent(R.id.sharePhone, sharePhoneIntent);
             widgetManager.updateAppWidget(widgetId, remoteViews);
             Intent resultValue = new Intent();
@@ -124,4 +124,7 @@ public abstract class BasePhoneWidgetConfigureActivity extends AppCompatActivity
 
     @LayoutRes
     protected abstract int getWidgetLayoutId();
+
+    protected abstract Class<? extends  WidgetProvider> getProviderClass();
+
 }
