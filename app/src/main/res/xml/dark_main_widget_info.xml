@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:minWidth="120dp"
-                    android:minHeight="40dp"
+                    android:minWidth="@dimen/widget_min_width"
+                    android:minHeight="@dimen/widget_min_height"
                     android:configure="com.ymka.myphonenumber.widget.DarkPhoneWidgetConfigureActivity"
                     android:initialLayout="@layout/dark_widget_main"
                     android:resizeMode="horizontal"
-                    android:previewImage="@android:drawable/ic_btn_speak_now">
+                    android:previewImage="@drawable/dark_widget">
 </appwidget-provider>

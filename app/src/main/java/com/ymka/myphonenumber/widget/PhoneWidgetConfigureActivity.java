@@ -32,8 +32,7 @@ public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
 
     private WidgetController mWidgetController;
     private TextView mPhoneNumber;
-    private List<PhoneData> mPhoneDataList;
-    private int mSelectedPosition;
+    private int mSelectedPosition = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +50,11 @@ public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
 
     private void initLayout() {
         if (mWidgetController.hasActiveSim()) {
-            initLayoutWithActiveSimCard();
+            if (mWidgetController.getActiveSimsCount() > 1) {
+                initLayoutWithActiveSimCard();
+            } else {
+                applyWidgetSettings();
+            }
         } else {
             setContentView(R.layout.activity_widget_configure_no_active_sim);
         }
@@ -60,10 +63,10 @@ public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
     private void initLayoutWithActiveSimCard() {
         setContentView(R.layout.activity_widget_configure);
         mPhoneNumber = (TextView) findViewById(R.id.phoneNumber);
-        mPhoneDataList = mWidgetController.getPhoneDataList();
-        String[] spinnerData = new String[mPhoneDataList.size()];
-        for (int i = 0; i < mPhoneDataList.size(); i++) {
-            PhoneData phoneData = mPhoneDataList.get(i);
+        final List<PhoneData> phoneDataList = mWidgetController.getPhoneDataList();
+        String[] spinnerData = new String[phoneDataList.size()];
+        for (int i = 0; i < phoneDataList.size(); i++) {
+            PhoneData phoneData = phoneDataList.get(i);
             spinnerData[i] = phoneData.getOperatorName();
         }
 
@@ -74,7 +77,7 @@ public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedPosition = position;
-                mPhoneNumber.setText(mPhoneDataList.get(mSelectedPosition).getPhoneNumber());
+                mPhoneNumber.setText(phoneDataList.get(mSelectedPosition).getPhoneNumber());
             }
 
             @Override
@@ -99,7 +102,7 @@ public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
             mWidgetController.addWidgetForSimSlot(widgetId, mSelectedPosition);
             AppWidgetManager widgetManager = AppWidgetManager.getInstance(this);
             RemoteViews remoteViews = new RemoteViews(getPackageName(), getWidgetLayoutId());
-            String number = mPhoneDataList.get(mSelectedPosition).getPhoneNumber();
+            String number = mWidgetController.getPhoneDataList().get(mSelectedPosition).getPhoneNumber();
             remoteViews.setTextViewText(R.id.textView, number);
             PendingIntent pendingIntent = WidgetProvider.getCopyToClipboardPendingIntent(this, widgetId, number, getProviderClass());
             remoteViews.setOnClickPendingIntent(R.id.copyPhoneToClipBoard, pendingIntent);
