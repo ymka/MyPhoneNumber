@@ -71,7 +71,7 @@ public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
         }
 
         Spinner spinner = (Spinner) findViewById(R.id.selectSimCard);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, spinnerData);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.item_spinner_phone, spinnerData);
         spinner.setAdapter(arrayAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

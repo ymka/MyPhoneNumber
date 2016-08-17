@@ -15,4 +15,5 @@
     <string name="request_permissions">Request permissions</string>
     <string name="sim_card_absent">Sim-card is absent</string>
     <string name="warning_dual_sim_message">The app doesn\'t support multi sim-card in current version Android</string>
+    <string name="activity_label_widget_settings">Widget settings</string>
 </resources>
