@@ -24,6 +24,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapter.ActionListener,
@@ -31,11 +33,15 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
 
     private static final String sKeyShowWarningDialog = "net.ginapps.myphonenumber.MainActivity.KeyShowWarningDialog";
     private static final int sRequestAppSettings = 1233;
+    private static final String sShareEvent = "Share";
+    private static final String sCopyToClipboard = "Copy to clipboard";
     private PhoneNumbersAdapter mPhoneNumbersAdapter;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setContentView(R.layout.activity_main);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recylerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -116,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         ClipData clipData = ClipData.newPlainText(getString(R.string.clip_label), phoneNumber);
         clipboard.setPrimaryClip(clipData);
         Toast.makeText(this, R.string.phone_copy_toast, Toast.LENGTH_SHORT).show();
+        sendStatistic(sCopyToClipboard);
     }
 
     @Override
@@ -126,6 +133,14 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         sendIntent.putExtra(Intent.EXTRA_TEXT, phoneNumber);
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, getString(R.string.share_text_label)));
+        sendStatistic(sShareEvent);
+    }
+
+    private void sendStatistic(String name) {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Application");
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     @Override
