@@ -1,4 +1,4 @@
-package com.ymka.myphonenumber.widget;
+package net.ginapps.myphonenumber.widget;
 
 import android.Manifest;
 import android.app.PendingIntent;
@@ -14,9 +14,9 @@ import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.ymka.myphonenumber.PhoneData;
-import com.ymka.myphonenumber.R;
-import com.ymka.myphonenumber.WidgetController;
+import net.ginapps.myphonenumber.PhoneData;
+import net.ginapps.myphonenumber.R;
+import net.ginapps.myphonenumber.WidgetController;
 
 import timber.log.Timber;
 
@@ -25,8 +25,8 @@ import timber.log.Timber;
  */
 public abstract class WidgetProvider extends AppWidgetProvider {
 
-    private static final String sExtraPhoneNumber = "com.ymka.myphonenumber.widget.WidgetProvider.ExtraPhoneNumber";
-    private static final String sActionCopyToClipboard = "com.ymka.myphonenumber.widget.WidgetProvider.ActionCopyToClipboard";
+    private static final String sExtraPhoneNumber = "net.ginapps.myphonenumber.widget.WidgetProvider.ExtraPhoneNumber";
+    private static final String sActionCopyToClipboard = "net.ginapps.myphonenumber.widget.WidgetProvider.ActionCopyToClipboard";
 
     @Override
     public void onReceive(Context context, Intent intent) {

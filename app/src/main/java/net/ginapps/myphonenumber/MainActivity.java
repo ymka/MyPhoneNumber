@@ -1,4 +1,4 @@
-package com.ymka.myphonenumber;
+package net.ginapps.myphonenumber;
 
 import android.Manifest;
 import android.content.ClipData;
@@ -29,7 +29,7 @@ import timber.log.Timber;
 public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapter.ActionListener,
                                                                PermissionDialog.ActionListener {
 
-    private static final String sKeyShowWarningDialog = "com.ymka.myphonenumber.MainActivity.KeyShowWarningDialog";
+    private static final String sKeyShowWarningDialog = "net.ginapps.myphonenumber.MainActivity.KeyShowWarningDialog";
     private static final int sRequestAppSettings = 1233;
     private PhoneNumbersAdapter mPhoneNumbersAdapter;
 

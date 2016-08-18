@@ -1,4 +1,4 @@
-package com.ymka.myphonenumber.widget;
+package net.ginapps.myphonenumber.widget;
 
 import android.Manifest;
 import android.app.PendingIntent;
@@ -19,9 +19,9 @@ import android.widget.RemoteViews;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.ymka.myphonenumber.PhoneData;
-import com.ymka.myphonenumber.R;
-import com.ymka.myphonenumber.WidgetController;
+import net.ginapps.myphonenumber.PhoneData;
+import net.ginapps.myphonenumber.R;
+import net.ginapps.myphonenumber.WidgetController;
 
 import java.util.List;
 

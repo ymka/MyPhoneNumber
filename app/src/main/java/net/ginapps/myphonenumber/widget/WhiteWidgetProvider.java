@@ -1,6 +1,6 @@
-package com.ymka.myphonenumber.widget;
+package net.ginapps.myphonenumber.widget;
 
-import com.ymka.myphonenumber.R;
+import net.ginapps.myphonenumber.R;
 
 /**
  * Created by Alexander Kondenko.

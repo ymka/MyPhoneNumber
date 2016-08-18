@@ -2,7 +2,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
                     android:minWidth="@dimen/widget_min_width"
                     android:minHeight="@dimen/widget_min_height"
-                    android:configure="com.ymka.myphonenumber.widget.WhitePhoneWidgetConfigureActivity"
+                    android:configure="net.ginapps.myphonenumber.widget.WhitePhoneWidgetConfigureActivity"
                     android:initialLayout="@layout/white_widget_main"
                     android:resizeMode="horizontal"
                     android:previewImage="@drawable/white_widget">

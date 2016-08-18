@@ -1,4 +1,4 @@
-package com.ymka.myphonenumber.holder;
+package net.ginapps.myphonenumber.holder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.ymka.myphonenumber.R;
+import net.ginapps.myphonenumber.R;
 
 /**
  * Created by Alexander Kondenko.

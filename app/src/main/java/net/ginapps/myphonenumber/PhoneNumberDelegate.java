@@ -1,4 +1,4 @@
-package com.ymka.myphonenumber;
+package net.ginapps.myphonenumber;
 
 import android.support.annotation.Nullable;
 

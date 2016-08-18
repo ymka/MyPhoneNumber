@@ -1,4 +1,4 @@
-package com.ymka.myphonenumber;
+package net.ginapps.myphonenumber;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.ymka.myphonenumber.holder.PhoneHolder;
+import net.ginapps.myphonenumber.holder.PhoneHolder;
 
 import java.util.ArrayList;
 import java.util.List;
