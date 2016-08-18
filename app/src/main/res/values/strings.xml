@@ -4,14 +4,14 @@
     <string name="phone_copy_toast">Phone number has been copied</string>
     <string name="share_text_label">Send my phone number</string>
     <string name="share_text_subject">My phone number</string>
-    <string name="title_permission_dialog">Permission</string>
-    <string name="message_permission_dialog">Message permission dialog</string>
+    <string name="title_permission_dialog">Permissions info</string>
+    <string name="message_permission_dialog">Permissions of making and managing phone calls are needed to display your phone number and name of operator.</string>
     <string name="settings">Settings</string>
     <string name="no_active_sim_card">There is no active sim card</string>
     <string name="chosen_sim">Choose sim card:</string>
     <string name="phone_number">Phone number:</string>
     <string name="label_no_active_card">You have no one active SIM-card</string>
-    <string name="label_request_permissions">Phone permissions are needed for displaying your phone number and name of operator\n%s</string>
+    <string name="label_request_permissions">Permissions of making and managing phone calls are needed to display your phone number and name of operator.\n%s</string>
     <string name="request_permissions">Request permissions</string>
     <string name="sim_card_absent">Sim-card is absent</string>
     <string name="warning_dual_sim_message">The app doesn\'t support multi sim-card in current version Android</string>

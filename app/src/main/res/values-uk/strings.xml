@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Мiй номер</string>
+    <string name="clip_label">Мiй номер</string>
+    <string name="phone_copy_toast">Номер був скопійований</string>
+    <string name="share_text_label">Відправити номер телефону</string>
+    <string name="share_text_subject">Мій номер телефону</string>
+    <string name="title_permission_dialog">Інформація про права</string>
+    <string name="message_permission_dialog">Права на осуществления телефонных звонков и управления ими необходимы для отображения номера телефона и именi оператора</string>
+    <string name="settings">Налаштування</string>
+    <string name="no_active_sim_card">Немає активної SIM-карти</string>
+    <string name="chosen_sim">Оберіть SIM-картку:</string>
+    <string name="phone_number">Номер телефону:</string>
+    <string name="label_no_active_card">Немає активної SIM-карти</string>
+    <string name="label_request_permissions">Права на осуществления телефонных звонков и управления ими необходимы для отображения номера телефона и именi оператора\n%s</string>
+    <string name="request_permissions">Запитати права</string>
+    <string name="sim_card_absent">Sim-карта отсутсвует</string>
+    <string name="warning_dual_sim_message">Додаток не підтримує мульти SIM-карти в поточній версії андроїда.</string>
+    <string name="activity_label_widget_settings">Налаштування віджета</string>
+</resources>
