@@ -15,3 +15,14 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# Don't obfuscate android support classes and interfaces
+-keep class android.support.v4.** { *; }
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v4.** { *; }
+-keep interface android.support.v7.** { *; }
+
+# Fabric
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception
