@@ -53,6 +53,10 @@
                        android:resource="@xml/white_main_widget_info"/>
         </receiver>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="3b6ffd54c7cea129444cca7097ae2df17fdcfe1b" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
