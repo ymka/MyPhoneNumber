@@ -10,4 +10,5 @@
     <dimen name="widget_min_height">40dp</dimen>
     <dimen name="text_spinner_padding">8dp</dimen>
     <dimen name="text_spinner_size">18sp</dimen>
+    <dimen name="item_list_margin">4dp</dimen>
 </resources>
