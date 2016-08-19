@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
 
     private static final String sKeyShowWarningDialog = "net.ginapps.myphonenumber.MainActivity.KeyShowWarningDialog";
     private static final int sRequestAppSettings = 1233;
-    private static final String sShareEvent = "Share";
-    private static final String sCopyToClipboard = "Copy to clipboard";
     private PhoneNumbersAdapter mPhoneNumbersAdapter;
     private FirebaseAnalytics mFirebaseAnalytics;
 
@@ -122,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         ClipData clipData = ClipData.newPlainText(getString(R.string.clip_label), phoneNumber);
         clipboard.setPrimaryClip(clipData);
         Toast.makeText(this, R.string.phone_copy_toast, Toast.LENGTH_SHORT).show();
-        sendStatistic(sCopyToClipboard);
+        AnalyticsUtils.sendApplicationStatistic(mFirebaseAnalytics, AnalyticsUtils.sCopyToClipboard);
     }
 
     @Override
@@ -133,15 +131,9 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         sendIntent.putExtra(Intent.EXTRA_TEXT, phoneNumber);
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, getString(R.string.share_text_label)));
-        sendStatistic(sShareEvent);
+        AnalyticsUtils.sendApplicationStatistic(mFirebaseAnalytics, AnalyticsUtils.sShareEvent);
     }
 
-    private void sendStatistic(String name) {
-        Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Application");
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-    }
 
     @Override
     public void onSettingsClicked(Intent intent) {

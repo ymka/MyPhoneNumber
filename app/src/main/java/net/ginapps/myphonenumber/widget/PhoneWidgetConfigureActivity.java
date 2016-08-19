@@ -19,6 +19,10 @@ import android.widget.RemoteViews;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import net.ginapps.myphonenumber.PhoneData;
 import net.ginapps.myphonenumber.R;
 import net.ginapps.myphonenumber.WidgetController;
@@ -29,6 +33,8 @@ import java.util.List;
  * Created by Alexander Kondenko.
  */
 public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
+
+    private static final String sSetupWidgetEvent = "SetupWidget";
 
     private WidgetController mWidgetController;
     private TextView mPhoneNumber;
@@ -42,10 +48,19 @@ public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
             mWidgetController = new WidgetController(this);
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
                 initLayout();
+                sendStatistic();
             } else if (savedInstanceState == null) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
             }
         }
+    }
+
+    private void sendStatistic() {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, sSetupWidgetEvent);
+        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        CustomEvent event = new CustomEvent(sSetupWidgetEvent);
+        Answers.getInstance().logCustom(event);
     }
 
     private void initLayout() {
