@@ -23,6 +23,7 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import net.ginapps.myphonenumber.BuildConfig;
 import net.ginapps.myphonenumber.PhoneData;
 import net.ginapps.myphonenumber.R;
 import net.ginapps.myphonenumber.WidgetController;
@@ -56,6 +57,8 @@ public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
     }
 
     private void sendStatistic() {
+        if (BuildConfig.DEBUG) return;
+
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, sSetupWidgetEvent);
         FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);

@@ -19,14 +19,20 @@ public class AnalyticsUtils {
     private static final String sEventName = "EVENT_NAME";
 
     public static void sendApplicationStatistic(FirebaseAnalytics analytics, String name) {
+        if (BuildConfig.DEBUG) return;
+
         sendStatistic(analytics, sApplicationEvent, name);
     }
 
     public static void sendWidgetStatistic(FirebaseAnalytics analytics, String name) {
+        if (BuildConfig.DEBUG) return;
+
         sendStatistic(analytics, sWidgetEvent, name);
     }
 
     public static void sendStatistic(FirebaseAnalytics analytics, String eventId, String name) {
+        if (BuildConfig.DEBUG) return;
+
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, eventId);
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
