@@ -83,13 +83,13 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         }
 
         Timber.d("Sims count %s", phoneNumberDelegate.getSimsData().size());
-        mPhoneNumbersAdapter.addPhonesData(phoneNumberDelegate.getSimsData());
-        mPhoneNumbersAdapter.notifyDataSetChanged();
         TextView textLabel = (TextView) findViewById(R.id.textLabel);
-        if (mPhoneNumbersAdapter.getItemCount() == 0) {
+        if (!phoneNumberDelegate.hasActiveSim()) {
             textLabel.setVisibility(View.VISIBLE);
             textLabel.setText(R.string.label_no_active_card);
         } else {
+            mPhoneNumbersAdapter.addPhonesData(phoneNumberDelegate.getSimsData());
+            mPhoneNumbersAdapter.notifyDataSetChanged();
             textLabel.setVisibility(View.GONE);
         }
     }
