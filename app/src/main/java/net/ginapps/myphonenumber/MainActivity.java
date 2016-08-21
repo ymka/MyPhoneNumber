@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
             showWarningDialog();
         }
 
-        Timber.d("Sims count %s", phoneNumberDelegate.getSimsData().size());
         TextView textLabel = (TextView) findViewById(R.id.textLabel);
         if (!phoneNumberDelegate.hasActiveSim()) {
             textLabel.setVisibility(View.VISIBLE);
