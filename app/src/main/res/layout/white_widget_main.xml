@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -14,20 +13,23 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="@color/dark_icon"
+        android:textSize="@dimen/widget_phone_size"
         android:textStyle="bold"/>
 
     <ImageButton
         android:id="@+id/copyPhoneToClipBoard"
-        android:layout_width="@dimen/default_min_clickable_element_size"
-        android:layout_height="@dimen/default_min_clickable_element_size"
+        android:layout_width="@dimen/widget_btn_icon_size"
+        android:layout_height="@dimen/widget_btn_icon_size"
         style="@style/WidgetButton"
-        app:srcCompat="@drawable/ic_content_copy_dark_widget_24dp"/>
+        android:layout_marginLeft="@dimen/widget_btn_margin"
+        android:layout_marginRight="@dimen/widget_btn_margin"
+        android:src="@drawable/ic_content_copy_dark_widget_24dp"/>
 
     <ImageButton
         android:id="@+id/sharePhone"
-        android:layout_width="@dimen/default_min_clickable_element_size"
-        android:layout_height="@dimen/default_min_clickable_element_size"
+        android:layout_width="@dimen/widget_btn_icon_size"
+        android:layout_height="@dimen/widget_btn_icon_size"
         style="@style/WidgetButton"
-        app:srcCompat="@drawable/ic_share_dark_widget_24dp"/>
+        android:src="@drawable/ic_share_dark_widget_24dp"/>
 
 </LinearLayout>
