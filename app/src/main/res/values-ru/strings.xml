@@ -16,6 +16,8 @@
     <string name="sim_card_absent">Sim-карта отсутствует</string>
     <string name="warning_dual_sim_message">Приложение не поддерживает мульти SIM-карты в текущей версии андроида.</string>
     <string name="activity_label_widget_settings">Настройки виджета</string>
+    <string name="unknown_number">Неизвестный номер</string>
+    <string name="edit">Редактировать</string>
     <string name="btn_save">Сохранить</string>
     <string name="dialog_title">Введите номер:</string>
     <string name="error_wrong_number">Неправильный номер. Перепроверьте пожалуйста</string>
