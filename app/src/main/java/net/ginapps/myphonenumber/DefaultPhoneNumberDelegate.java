@@ -17,9 +17,11 @@ import java.util.List;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
 public class DefaultPhoneNumberDelegate implements PhoneNumberDelegate {
 
+    private final Context mContext;
     private final SubscriptionManager mManager;
 
     public DefaultPhoneNumberDelegate(Context context) {
+        mContext = context;
         mManager = SubscriptionManager.from(context);
     }
 
@@ -44,9 +46,14 @@ public class DefaultPhoneNumberDelegate implements PhoneNumberDelegate {
 
     @NonNull
     private PhoneData createPhoneDate(SubscriptionInfo info) {
-        PhoneData phoneData = new PhoneData(info.getNumber(), info.getDisplayName().toString(), info.getCountryIso());
-        phoneData.setColor(info.getIconTint());
-        return phoneData;
+        PhoneData.Builder builder = new PhoneData.Builder(mContext);
+        builder.setPhoneNumber(info.getNumber());
+        builder.setOperatorName(info.getDisplayName().toString());
+        builder.setCountryIso(info.getCountryIso());
+        builder.setColor(info.getIconTint());
+        builder.setSlotIndex(info.getSimSlotIndex());
+
+        return builder.build();
     }
 
     @Nullable

@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,12 +30,14 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapter.ActionListener,
-                                                               PermissionDialog.ActionListener {
+                                                               PermissionDialog.ActionListener,
+                                                               EditPhoneNumberDialog.OnEditPhoneListener {
 
     private static final String sKeyShowWarningDialog = "net.ginapps.myphonenumber.MainActivity.KeyShowWarningDialog";
     private static final int sRequestAppSettings = 1233;
     private PhoneNumbersAdapter mPhoneNumbersAdapter;
     private FirebaseAnalytics mFirebaseAnalytics;
+    PhoneNumberDelegate mPhoneNumberDelegate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +69,13 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     }
 
     private void initData() {
-        PhoneNumberDelegate phoneNumberDelegate;
         boolean showWarning = false;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             Timber.d("Use default delegate");
-            phoneNumberDelegate = new DefaultPhoneNumberDelegate(this);
+            mPhoneNumberDelegate = new DefaultPhoneNumberDelegate(this);
         } else {
             Timber.d("Use legacy delegate");
-            phoneNumberDelegate = new LegacyPhoneNumberDelegate(this);
+            mPhoneNumberDelegate = new LegacyPhoneNumberDelegate(this);
             showWarning = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(sKeyShowWarningDialog, true);
         }
 
@@ -83,11 +85,11 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         }
 
         TextView textLabel = (TextView) findViewById(R.id.textLabel);
-        if (!phoneNumberDelegate.hasActiveSim()) {
+        if (!mPhoneNumberDelegate.hasActiveSim()) {
             textLabel.setVisibility(View.VISIBLE);
             textLabel.setText(R.string.label_no_active_card);
         } else {
-            mPhoneNumbersAdapter.addPhonesData(phoneNumberDelegate.getSimsData());
+            mPhoneNumbersAdapter.addPhonesData(mPhoneNumberDelegate.getSimsData());
             mPhoneNumbersAdapter.notifyDataSetChanged();
             textLabel.setVisibility(View.GONE);
         }
@@ -133,6 +135,19 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         AnalyticsUtils.sendApplicationStatistic(mFirebaseAnalytics, AnalyticsUtils.sShareEvent);
     }
 
+    @Override
+    public void onEditPhoneNumber(int position) {
+        Timber.d("Edit phone number");
+        PhoneData phoneData = mPhoneNumbersAdapter.getItemOnPosition(position);
+        Bundle args = new Bundle();
+        args.putInt(EditPhoneNumberDialog.KEY_ITEM_POSITION, position);
+        args.putString(EditPhoneNumberDialog.KEY_ISO, phoneData.getCountryIso());
+        args.putString(EditPhoneNumberDialog.KEY_PHONE_NUMBER, phoneData.getPhoneNumber());
+
+        EditPhoneNumberDialog editPhoneNumberDialog = new EditPhoneNumberDialog();
+        editPhoneNumberDialog.setArguments(args);
+        getFragmentManager().beginTransaction().add(editPhoneNumberDialog, "").commitAllowingStateLoss();
+    }
 
     @Override
     public void onSettingsClicked(Intent intent) {
@@ -178,5 +193,14 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
                 // do nothing
                 break;
         }
+    }
+
+    @Override
+    public void onPhoneNumberSaved(int position, String phoneNumber) {
+        PhoneData phoneData = mPhoneNumbersAdapter.getItemOnPosition(position);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        editor.putString(String.valueOf(phoneData.getSlotIndex()), phoneNumber).apply();
+        mPhoneNumbersAdapter.resetPhonesData(mPhoneNumberDelegate.getSimsData());
+        mPhoneNumbersAdapter.notifyDataSetChanged();
     }
 }

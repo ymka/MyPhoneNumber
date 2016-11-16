@@ -16,4 +16,7 @@
     <string name="sim_card_absent">Sim-карта отсутсвует</string>
     <string name="warning_dual_sim_message">Додаток не підтримує мульти SIM-карти в поточній версії андроїда.</string>
     <string name="activity_label_widget_settings">Налаштування віджета</string>
+    <string name="btn_save">Зберегти</string>
+    <string name="dialog_title">Введiть ваш номер:</string>
+    <string name="error_wrong_number">Невiрний номер. Будь ласка перепровiрте.</string>
 </resources>

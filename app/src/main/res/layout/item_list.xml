@@ -5,6 +5,12 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="@dimen/item_list_margin">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/phone_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

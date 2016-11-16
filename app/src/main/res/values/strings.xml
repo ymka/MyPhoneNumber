@@ -16,4 +16,9 @@
     <string name="sim_card_absent">Sim-card is absent</string>
     <string name="warning_dual_sim_message">The app doesn\'t support multi sim-card in current version Android</string>
     <string name="activity_label_widget_settings">Widget settings</string>
+    <string name="unknown_number">Unknown number</string>
+    <string name="edit">Edit</string>
+    <string name="btn_save">Save</string>
+    <string name="dialog_title">Enter your phone number:</string>
+    <string name="error_wrong_number">Wrong number. Pls check it.</string>
 </resources>

@@ -2,6 +2,8 @@ package net.ginapps.myphonenumber.holder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -11,21 +13,26 @@ import net.ginapps.myphonenumber.R;
 /**
  * Created by Alexander Kondenko.
  */
-public class PhoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class PhoneHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            Toolbar.OnMenuItemClickListener {
 
     private final ClickListener mClickListener;
-    public final TextView mPhoneNumber;
-    public final TextView mOperatorName;
+    public final TextView phoneNumber;
+    public final TextView operatorName;
+    public final Toolbar toolbar;
 
     public PhoneHolder(@NonNull View itemView, @NonNull ClickListener clickListener) {
         super(itemView);
-        mPhoneNumber = (TextView) itemView.findViewById(R.id.phoneNumber);
-        mOperatorName = (TextView) itemView.findViewById(R.id.operatorName);
+        mClickListener = clickListener;
+        phoneNumber = (TextView) itemView.findViewById(R.id.phoneNumber);
+        operatorName = (TextView) itemView.findViewById(R.id.operatorName);
+        toolbar = (Toolbar) itemView.findViewById(R.id.phone_toolbar);
+        toolbar.inflateMenu(R.menu.item_list);
+        toolbar.setOnMenuItemClickListener(this);
         ImageButton copyToClipboard = (ImageButton) itemView.findViewById(R.id.copyPhoneToClipBoard);
         copyToClipboard.setOnClickListener(this);
         ImageButton share = (ImageButton) itemView.findViewById(R.id.sharePhone);
         share.setOnClickListener(this);
-        mClickListener = clickListener;
     }
 
     @Override
@@ -43,9 +50,17 @@ public class PhoneHolder extends RecyclerView.ViewHolder implements View.OnClick
         }
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        mClickListener.onEditPhoneNumber(getAdapterPosition());
+
+        return true;
+    }
+
 
     public interface ClickListener {
         void onCopyPhoneNumber(int position);
         void onSharePhoneNumber(int position);
+        void onEditPhoneNumber(int position);
     }
 }

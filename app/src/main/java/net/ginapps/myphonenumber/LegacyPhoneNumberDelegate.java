@@ -1,6 +1,8 @@
 package net.ginapps.myphonenumber;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 
@@ -10,11 +12,14 @@ import java.util.List;
 /**
  * Created by Alexander Kondenko.
  */
+@TargetApi(Build.VERSION_CODES.KITKAT_WATCH)
 public class LegacyPhoneNumberDelegate implements PhoneNumberDelegate {
 
+    private final Context mContext;
     private final TelephonyManager mTelephonyManager;
 
     public LegacyPhoneNumberDelegate(Context context) {
+        mContext = context;
         mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
     }
 
@@ -38,7 +43,12 @@ public class LegacyPhoneNumberDelegate implements PhoneNumberDelegate {
         String simOperatorName = mTelephonyManager.getSimOperatorName();
         String countryIso = mTelephonyManager.getSimCountryIso();
 
-        return new PhoneData(line1Number, simOperatorName, countryIso);
+        PhoneData.Builder builder = new PhoneData.Builder(mContext);
+        builder.setPhoneNumber(line1Number);
+        builder.setOperatorName(simOperatorName);
+        builder.setCountryIso(countryIso);
+
+        return builder.build();
     }
 
     @Nullable

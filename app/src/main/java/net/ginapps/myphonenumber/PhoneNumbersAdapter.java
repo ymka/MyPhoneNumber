@@ -6,6 +6,7 @@ import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import net.ginapps.myphonenumber.holder.PhoneHolder;
@@ -37,6 +38,11 @@ public class PhoneNumbersAdapter extends RecyclerView.Adapter<PhoneHolder> imple
         mPhoneData.addAll(phoneData);
     }
 
+    public void resetPhonesData(List<PhoneData> phoneData) {
+        mPhoneData.clear();
+        mPhoneData.addAll(phoneData);
+    }
+
     @Override
     public PhoneHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new PhoneHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false), this);
@@ -45,8 +51,19 @@ public class PhoneNumbersAdapter extends RecyclerView.Adapter<PhoneHolder> imple
     @Override
     public void onBindViewHolder(PhoneHolder holder, int position) {
         PhoneData phoneData = mPhoneData.get(position);
-        holder.mPhoneNumber.setText(phoneData.getPhoneNumber());
-        holder.mOperatorName.setText(phoneData.getOperatorName());
+        String phoneNumber = phoneData.getPhoneNumber();
+        if (phoneNumber.isEmpty()) {
+            phoneNumber = mContext.getString(R.string.unknown_number);
+        }
+
+        if (phoneData.isShowEditNumber()) {
+            holder.toolbar.setVisibility(View.VISIBLE);
+        } else {
+            holder.toolbar.setVisibility(View.GONE);
+        }
+
+        holder.phoneNumber.setText(phoneNumber);
+        holder.operatorName.setText(phoneData.getOperatorName());
         int operatorBackgroundColor;
         if (phoneData.getColor() != -1) {
             operatorBackgroundColor = phoneData.getColor();
@@ -56,7 +73,7 @@ public class PhoneNumbersAdapter extends RecyclerView.Adapter<PhoneHolder> imple
 
         GradientDrawable shapeDrawable = (GradientDrawable) ContextCompat.getDrawable(mContext, R.drawable.operator_background);
         shapeDrawable.setColor(operatorBackgroundColor);
-        holder.mOperatorName.setBackground(shapeDrawable);
+        holder.operatorName.setBackground(shapeDrawable);
     }
 
     @Override
@@ -78,9 +95,21 @@ public class PhoneNumbersAdapter extends RecyclerView.Adapter<PhoneHolder> imple
         }
     }
 
+    @Override
+    public void onEditPhoneNumber(int position) {
+        if (mActionListener != null) {
+            mActionListener.onEditPhoneNumber(position);
+        }
+    }
+
+    public PhoneData getItemOnPosition(int position) {
+        return mPhoneData.get(position);
+    }
+
     public interface ActionListener {
         void onCopyPhoneNumber(String phoneNumber);
         void onSharePhoneNumber(String phoneNumber);
+        void onEditPhoneNumber(int position);
     }
 
 }
