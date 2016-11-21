@@ -52,7 +52,7 @@ public class PhoneNumbersAdapter extends RecyclerView.Adapter<PhoneHolder> imple
     public void onBindViewHolder(PhoneHolder holder, int position) {
         PhoneData phoneData = mPhoneData.get(position);
         String phoneNumber = phoneData.getPhoneNumber();
-        if (phoneNumber.isEmpty()) {
+        if (phoneNumber == null || phoneNumber.isEmpty()) {
             phoneNumber = mContext.getString(R.string.unknown_number);
         }
 
