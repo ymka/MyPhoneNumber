@@ -118,7 +118,7 @@ public class PhoneData {
         }
 
         public PhoneData build() {
-            boolean phoneNumberEmpty = mPhoneNumber.isEmpty();
+            boolean phoneNumberEmpty = mPhoneNumber == null || mPhoneNumber.isEmpty();
             if (phoneNumberEmpty) {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
                 String key = String.valueOf(mSlotIndex);
