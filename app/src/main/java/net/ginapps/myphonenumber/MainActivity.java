@@ -1,6 +1,7 @@
 package net.ginapps.myphonenumber;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -27,6 +29,9 @@ import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapter.ActionListener,
@@ -34,9 +39,11 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
                                                                EditPhoneNumberDialog.OnEditPhoneListener {
 
     private static final String sKeyShowWarningDialog = "net.ginapps.myphonenumber.MainActivity.KeyShowWarningDialog";
+    private static final String sKeyRatingStatus = "net.ginapps.myphonenumber.MainActivity.KeyRatingStatus";
     private static final int sRequestAppSettings = 1233;
     private PhoneNumbersAdapter mPhoneNumbersAdapter;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private RatingStatus mRatingStatus;
     PhoneNumberDelegate mPhoneNumberDelegate;
 
     @Override
@@ -57,6 +64,30 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         } else if (savedInstanceState == null) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
         }
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String ratingString = preferences.getString(sKeyRatingStatus, "");
+        if (ratingString.isEmpty()) {
+            mRatingStatus = new RatingStatus();
+        } else {
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(ratingString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (jsonObject != null) {
+                mRatingStatus = new RatingStatus(jsonObject);
+            } else {
+                mRatingStatus = new RatingStatus();
+            }
+        }
+
+        mRatingStatus.increaseStartCount();
+        if (mRatingStatus.isShowRatingDialog()) {
+            showRatingDialog();
+        }
     }
 
     @Override
@@ -65,6 +96,22 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
             initData();
         } else {
             showPermissionDialog();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveRatingStatus();
+    }
+
+    private void saveRatingStatus() {
+        if (mRatingStatus != null) {
+            JSONObject jsonObject = mRatingStatus.toJson();
+            if (jsonObject != null) {
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+                editor.putString(sKeyRatingStatus, jsonObject.toString()).apply();
+            }
         }
     }
 
@@ -117,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
 
     @Override
     public void onCopyPhoneNumber(String phoneNumber) {
+        mRatingStatus.increaseActionCount();
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = ClipData.newPlainText(getString(R.string.clip_label), phoneNumber);
         clipboard.setPrimaryClip(clipData);
@@ -126,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
 
     @Override
     public void onSharePhoneNumber(String phoneNumber) {
+        mRatingStatus.increaseActionCount();
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_text_subject));
@@ -203,4 +252,50 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         mPhoneNumbersAdapter.resetPhonesData(mPhoneNumberDelegate.getSimsData());
         mPhoneNumbersAdapter.notifyDataSetChanged();
     }
+
+    private void showRatingDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.rate_title_dialog));
+        builder.setMessage(getString(R.string.rate_message_dialog));
+        builder.setPositiveButton(getString(R.string.positive_btn_rate_dialog), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                launchGooglePlay();
+            }
+        });
+
+        builder.setNegativeButton(getString(R.string.negative_btn_rate_dialog), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mRatingStatus.remindLater();
+                saveRatingStatus();
+            }
+        });
+
+        builder.setNeutralButton(getString(R.string.neutral_btn_rate_dialog), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mRatingStatus.never();
+                saveRatingStatus();
+            }
+        });
+
+        builder.create().show();
+    }
+
+    private void launchGooglePlay() {
+        Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        // To count with Play market backstack, After pressing back button,
+        // to taken back to our application, we need to add following flags to intent.
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        try {
+            startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
+        }
+    }
+
 }
