@@ -32,7 +32,7 @@ public class PhoneData {
         if (mPhoneNumber.length() > 7 || mPhoneNumber.contains("+")) {
             try {
                 String iso = "";
-                if (mPhoneNumber.contains("+")) {
+                if (!mShowEditNumber || mPhoneNumber.contains("+")) {
                     iso = mCountryIso.toUpperCase();
                 }
 
