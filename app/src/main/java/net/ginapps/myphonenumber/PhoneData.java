@@ -29,18 +29,63 @@ public class PhoneData {
     public String getPhoneNumber() {
         String phoneNumber = null;
         PhoneNumberUtil numberUtil = PhoneNumberUtil.getInstance();
-        try {
-            Phonenumber.PhoneNumber parse = numberUtil.parse(mPhoneNumber, mCountryIso.toUpperCase());
-            phoneNumber = numberUtil.formatNumberForMobileDialing(parse, "US", true);
-        } catch (NumberParseException e) {
-            e.printStackTrace();
+        if (mPhoneNumber.length() > 7 || mPhoneNumber.contains("+")) {
+            try {
+                String iso = "";
+                if (mPhoneNumber.contains("+")) {
+                    iso = mCountryIso.toUpperCase();
+                }
+
+                Phonenumber.PhoneNumber parse = numberUtil.parse(mPhoneNumber, iso);
+                phoneNumber = numberUtil.format(parse, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
+            } catch (NumberParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            phoneNumber = customFormat(mPhoneNumber);
         }
 
-        if (phoneNumber == null) {
-            phoneNumber = mPhoneNumber;
+        if (phoneNumber == null || phoneNumber.isEmpty()) {
+            phoneNumber = customFormat(mPhoneNumber);
         }
 
         return phoneNumber;
+    }
+
+    private String customFormat(String originalString) {
+        String string = originalString.replace("+", "");
+        StringBuilder builder = new StringBuilder();
+        if (string.length() <= 6) {
+            builder.append(string.substring(0, 3))
+                   .append(' ')
+                   .append(string.substring(3, string.length()));
+        } else if (string.length() == 7){
+            builder.append(string.substring(0, 3))
+                   .append(string.substring(3, 5))
+                   .append(' ')
+                   .append(string.substring(5, string.length()));
+        } else {
+            int start = 0;
+            for (int i = string.length() - 3, j = string.length(); i >= 0; i -= 3, j -= 3) {
+                start = i;
+                builder.append(string.substring(i, j));
+                if (i != 0) {
+                    builder.append(' ');
+                }
+            }
+
+            if (start != 0) {
+                builder.append(string.substring(0, start));
+            }
+
+            builder.reverse();
+        }
+
+        if (originalString.contains("+")) {
+            builder.insert(0, "+");
+        }
+
+        return builder.toString();
     }
 
     public String getOperatorName() {

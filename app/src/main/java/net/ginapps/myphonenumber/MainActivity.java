@@ -22,6 +22,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.widget.TextView;
@@ -31,6 +32,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -136,10 +139,29 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
             textLabel.setVisibility(View.VISIBLE);
             textLabel.setText(R.string.label_no_active_card);
         } else {
-            mPhoneNumbersAdapter.addPhonesData(mPhoneNumberDelegate.getSimsData());
+            List<PhoneData> simsData = mPhoneNumberDelegate.getSimsData();
+            mPhoneNumbersAdapter.addPhonesData(simsData);
             mPhoneNumbersAdapter.notifyDataSetChanged();
             textLabel.setVisibility(View.GONE);
+            int simNumberWithoutPhoneNumber = simNumberWithoutPhoneNumber(simsData);
+            if (simNumberWithoutPhoneNumber != -1) {
+                editPhoneNumber(simNumberWithoutPhoneNumber, true);
+            }
         }
+    }
+
+    private int simNumberWithoutPhoneNumber(List<PhoneData> simsData) {
+        int simNumber = -1;
+        for (int i = 0; i < simsData.size(); i++) {
+            PhoneData data = simsData.get(i);
+            if (TextUtils.isEmpty(data.getPhoneNumber())) {
+                simNumber = i;
+                break;
+            }
+        }
+
+
+        return simNumber;
     }
 
     private void showWarningDialog() {
@@ -186,13 +208,17 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
 
     @Override
     public void onEditPhoneNumber(int position) {
+        editPhoneNumber(position, false);
+    }
+
+    private void editPhoneNumber(int position, boolean showDescription) {
         Timber.d("Edit phone number");
         PhoneData phoneData = mPhoneNumbersAdapter.getItemOnPosition(position);
         Bundle args = new Bundle();
         args.putInt(EditPhoneNumberDialog.KEY_ITEM_POSITION, position);
         args.putString(EditPhoneNumberDialog.KEY_ISO, phoneData.getCountryIso());
         args.putString(EditPhoneNumberDialog.KEY_PHONE_NUMBER, phoneData.getPhoneNumber());
-
+        args.putBoolean(EditPhoneNumberDialog.KEY_SHOW_DESCRIPTION, showDescription);
         EditPhoneNumberDialog editPhoneNumberDialog = new EditPhoneNumberDialog();
         editPhoneNumberDialog.setArguments(args);
         getFragmentManager().beginTransaction().add(editPhoneNumberDialog, "").commitAllowingStateLoss();

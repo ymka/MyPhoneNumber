@@ -20,7 +20,8 @@
     <string name="edit">Edit</string>
     <string name="btn_save">Save</string>
     <string name="dialog_title">Enter your phone number:</string>
-    <string name="error_wrong_number">Wrong number. Pls check it.</string>
+    <string name="dialog_description">Phone number is not provided by system. You can enter it by yourself.</string>
+    <string name="error_wrong_number">Number length have to be at least 5 numbers.</string>
     <string name="rate_title_dialog">Rate app</string>
     <string name="rate_message_dialog">If this app is useful for you, please take a moment to rate the app. Thank you for your support</string>
     <string name="positive_btn_rate_dialog">Rate</string>

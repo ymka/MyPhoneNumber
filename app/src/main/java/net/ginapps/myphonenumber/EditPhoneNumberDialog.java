@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -30,6 +31,7 @@ public class EditPhoneNumberDialog extends DialogFragment {
     public static final String KEY_PHONE_NUMBER = "phoneNumber";
     public static final String KEY_ITEM_POSITION = "itemPosition";
     public static final String KEY_ISO = "iso";
+    public static final String KEY_SHOW_DESCRIPTION = "showDescription";
 
     private OnEditPhoneListener mListener;
     private int mItemPosition;
@@ -52,20 +54,23 @@ public class EditPhoneNumberDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Bundle arguments = getArguments();
         mItemPosition = arguments.getInt(KEY_ITEM_POSITION, 0);
-        mISO = arguments.getString(KEY_ITEM_POSITION, "US");
+        mISO = arguments.getString(KEY_ISO, "US");
         String phoneNumber = arguments.getString(KEY_PHONE_NUMBER, "");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = View.inflate(getActivity(), R.layout.layout_input_phone, null);
         mPhoneNumber = (EditText) view.findViewById(R.id.phoneEditText);
         if (!phoneNumber.isEmpty()) {
-            phoneNumber = phoneNumber.substring(1).replace(" ", "");
             mPhoneNumber.setText(phoneNumber);
             mPhoneNumber.setSelection(0, phoneNumber.length());
         }
 
         mPhoneInputLayout = (TextInputLayout) view.findViewById(R.id.phoneInputLayout);
         builder.setTitle(R.string.dialog_title);
+        if (arguments.getBoolean(KEY_SHOW_DESCRIPTION, false)) {
+            builder.setMessage(R.string.dialog_description);
+        }
+
         builder.setView(view);
         builder.setPositiveButton(R.string.btn_save, new DialogInterface.OnClickListener() {
             @Override
@@ -106,22 +111,42 @@ public class EditPhoneNumberDialog extends DialogFragment {
 
     private void finishEditing() {
         PhoneNumberUtil numberUtil = PhoneNumberUtil.getInstance();
-        String phone = "+" + mPhoneNumber.getText().toString();
+        String phone = mPhoneNumber.getText().toString();
         try {
-            Phonenumber.PhoneNumber phoneNumber = numberUtil.parse(phone, mISO.toUpperCase());
+            String formattedPhone = "+" + phone;
+            Phonenumber.PhoneNumber phoneNumber = numberUtil.parse(formattedPhone, mISO.toUpperCase());
             boolean validNumber = numberUtil.isValidNumber(phoneNumber);
             Timber.d("Number validation %s", validNumber);
             if (validNumber) {
-                mListener.onPhoneNumberSaved(mItemPosition, phone);
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mPhoneNumber.getWindowToken(), 0);
-                dismiss();
+                saveNumber(phone);
             } else {
-                mPhoneInputLayout.setError(getErrorMessage(numberUtil));
+                setUnformattedNumber(phone);
             }
         } catch (NumberParseException e) {
             e.printStackTrace();
-            mPhoneInputLayout.setError(getErrorMessage(numberUtil));
+            setUnformattedNumber(phone);
+        }
+    }
+
+    private void saveNumber(String phone) {
+        mListener.onPhoneNumberSaved(mItemPosition, phone);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mPhoneNumber.getWindowToken(), 0);
+        dismiss();
+    }
+
+    private void setUnformattedNumber(String number) {
+        boolean containsPlus = number.contains("+");
+        number = number.replace("+", "");
+        number = number.replaceAll("[^\\d]", "");
+        if (TextUtils.isDigitsOnly(number) && number.length() >= 5) {
+            if (containsPlus) {
+                number = "+" + number;
+            }
+
+            saveNumber(number);
+        } else {
+            mPhoneInputLayout.setError(getString(R.string.error_wrong_number));
         }
     }
 

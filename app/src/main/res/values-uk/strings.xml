@@ -20,7 +20,7 @@
     <string name="edit">Редагувати</string>
     <string name="btn_save">Зберегти</string>
     <string name="dialog_title">Введiть ваш номер:</string>
-    <string name="error_wrong_number">Невiрний номер. Будь ласка перепровiрте.</string>
+    <string name="error_wrong_number">Довжина номера повинна бути не менше 5 цифор</string>
     <string name="rate_title_dialog">Оцінити додаток</string>
     <string name="rate_message_dialog">Якщо додаток корисний для Вас, будь ласка поставте оцінку. Дякуємо за Вашу підтримку</string>
     <string name="positive_btn_rate_dialog">Оцінити</string>
