@@ -57,9 +57,9 @@ public class PhoneNumbersAdapter extends RecyclerView.Adapter<PhoneHolder> imple
         }
 
         if (phoneData.isShowEditNumber()) {
-            holder.toolbar.setVisibility(View.VISIBLE);
+            holder.editBtn.setVisibility(View.VISIBLE);
         } else {
-            holder.toolbar.setVisibility(View.GONE);
+            holder.editBtn.setVisibility(View.GONE);
         }
 
         holder.phoneNumber.setText(phoneNumber);

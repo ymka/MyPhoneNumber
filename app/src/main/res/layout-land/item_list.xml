@@ -40,7 +40,6 @@
                 android:paddingRight="@dimen/default_padding"
                 android:paddingTop="16dp"/>
 
-
         </LinearLayout>
 
         <View android:layout_width="1dp"
@@ -57,6 +56,14 @@
             android:paddingRight="@dimen/default_padding">
 
             <ImageButton
+                android:id="@+id/editPhoneNumber"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_edit_24dp"/>
+
+            <ImageButton
                 android:id="@+id/copyPhoneToClipBoard"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
@@ -71,12 +78,6 @@
                 app:srcCompat="@drawable/ic_share_24dp"/>
 
         </LinearLayout>
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/phone_toolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|top"/>
 
     </LinearLayout>
 

@@ -5,12 +5,6 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="@dimen/item_list_margin">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/phone_toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|top"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,6 +46,18 @@
             android:orientation="horizontal"
             android:paddingLeft="@dimen/default_padding"
             android:paddingRight="@dimen/default_padding">
+
+            <ImageButton
+                android:id="@+id/editPhoneNumber"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_edit_24dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
 
             <ImageButton
                 android:id="@+id/copyPhoneToClipBoard"
