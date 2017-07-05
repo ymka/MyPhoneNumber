@@ -29,7 +29,7 @@ public class PhoneData {
     public String getPhoneNumber() {
         String phoneNumber = null;
         PhoneNumberUtil numberUtil = PhoneNumberUtil.getInstance();
-        if (mPhoneNumber.length() > 7 || mPhoneNumber.contains("+")) {
+        if (mPhoneNumber != null && (mPhoneNumber.length() > 7 || mPhoneNumber.contains("+"))) {
             try {
                 String iso = "";
                 if (!mShowEditNumber || mPhoneNumber.contains("+")) {
@@ -53,6 +53,10 @@ public class PhoneData {
     }
 
     private String customFormat(String originalString) {
+        if (originalString == null || originalString.length() < 3) {
+            return originalString;
+        }
+
         String string = originalString.replace("+", "");
         StringBuilder builder = new StringBuilder();
         if (string.length() <= 6) {

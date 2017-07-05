@@ -26,4 +26,5 @@
     <string name="positive_btn_rate_dialog">Оценить</string>
     <string name="negative_btn_rate_dialog">Позже</string>
     <string name="neutral_btn_rate_dialog">Никогда</string>
+    <string name="dialog_description">Система не предоставляет номер телефона. Вы можете ввести его самостоятельно.</string>
 </resources>
