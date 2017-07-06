@@ -53,11 +53,15 @@ public class PhoneData {
     }
 
     private String customFormat(String originalString) {
-        if (originalString == null || originalString.length() < 3) {
+        if (originalString == null) {
             return originalString;
         }
 
         String string = originalString.replace("+", "");
+        if (string.length() < 3) {
+            return originalString;
+        }
+
         StringBuilder builder = new StringBuilder();
         if (string.length() <= 6) {
             builder.append(string.substring(0, 3))
