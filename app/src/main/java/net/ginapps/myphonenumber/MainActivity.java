@@ -24,7 +24,10 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
 
     private static final String sKeyShowWarningDialog = "net.ginapps.myphonenumber.MainActivity.KeyShowWarningDialog";
     private static final String sKeyRatingStatus = "net.ginapps.myphonenumber.MainActivity.KeyRatingStatus";
+    private static final String sKeyKeepScreenOn = "net.ginapps.myphonenumber.MainActivity.sKeyKeepScreenOn";
     private static final int sRequestAppSettings = 1233;
     private PhoneNumbersAdapter mPhoneNumbersAdapter;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -103,9 +107,22 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        boolean keep = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(sKeyKeepScreenOn, false);
+        if (keep) {
+            setKeepScreenOn(true);
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         saveRatingStatus();
+        boolean keep = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(sKeyKeepScreenOn, false);
+        if (keep) {
+            setKeepScreenOn(false);
+        }
     }
 
     private void saveRatingStatus() {
@@ -324,4 +341,39 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        boolean keep = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(sKeyKeepScreenOn, false);
+        menu.findItem(R.id.keepScreenOn).setChecked(keep);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.keepScreenOn:
+                boolean checked = !item.isChecked();
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                preferences.edit().putBoolean(sKeyKeepScreenOn, checked).apply();
+                item.setChecked(checked);
+                setKeepScreenOn(checked);
+                break;
+            case R.id.about:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setKeepScreenOn(boolean keepOn) {
+        WindowManager.LayoutParams attr = getWindow().getAttributes();
+        if (keepOn) {
+            attr.flags |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+        } else {
+            attr.flags ^= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+        }
+
+        getWindow().setAttributes(attr);
+    }
 }

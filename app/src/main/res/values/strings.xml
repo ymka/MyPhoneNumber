@@ -27,4 +27,6 @@
     <string name="positive_btn_rate_dialog">Rate</string>
     <string name="negative_btn_rate_dialog">Later</string>
     <string name="neutral_btn_rate_dialog">Never</string>
+    <string name="keep_scree_on">Keep screen ON</string>
+    <string name="about">About</string>
 </resources>

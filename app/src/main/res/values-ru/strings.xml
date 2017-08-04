@@ -27,4 +27,6 @@
     <string name="negative_btn_rate_dialog">Позже</string>
     <string name="neutral_btn_rate_dialog">Никогда</string>
     <string name="dialog_description">Система не предоставляет номер телефона. Вы можете ввести его самостоятельно.</string>
+    <string name="keep_scree_on">Держать экран ВКЛ.</string>
+    <string name="about">О программе</string>
 </resources>
