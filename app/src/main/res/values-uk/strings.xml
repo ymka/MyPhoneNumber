@@ -27,6 +27,11 @@
     <string name="negative_btn_rate_dialog">Пізніше</string>
     <string name="neutral_btn_rate_dialog">Ніколи</string>
     <string name="dialog_description">Система не надає номеру телефона. Вы можете ввести його самостійно.</string>
-    <string name="keep_scree_on">Тримати екран УВК.</string>
+    <string name="keep_scree_on">Не вимк. екран</string>
     <string name="about">Про додаток</string>
+    <string name="app_name_label">Iм\'я додатку: %s</string>
+    <string name="app_version">Версiя додатку: %s</string>
+    <string name="send_email">Вiдправити емейл</string>
+    <string name="email_subject">Покращення додатку. Версiя %s</string>
+    <string name="send_email_error">Email-додаток вiдсутнiй.</string>
 </resources>

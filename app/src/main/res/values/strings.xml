@@ -29,4 +29,9 @@
     <string name="neutral_btn_rate_dialog">Never</string>
     <string name="keep_scree_on">Keep screen ON</string>
     <string name="about">About</string>
+    <string name="app_name_label">App name: %s</string>
+    <string name="app_version">App version: %s</string>
+    <string name="send_email">Send email</string>
+    <string name="email_subject">App improvements. Version %s</string>
+    <string name="send_email_error">Can\'n find an email app.</string>
 </resources>

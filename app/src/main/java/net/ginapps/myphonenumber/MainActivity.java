@@ -294,6 +294,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         editor.putString(String.valueOf(phoneData.getSlotIndex()), phoneNumber).apply();
         mPhoneNumbersAdapter.resetPhonesData(mPhoneNumberDelegate.getSimsData());
         mPhoneNumbersAdapter.notifyDataSetChanged();
+        AnalyticsUtils.sendApplicationStatistic(mFirebaseAnalytics, AnalyticsUtils.sSetNumber);
     }
 
     private void showRatingDialog() {
@@ -360,6 +361,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
                 setKeepScreenOn(checked);
                 break;
             case R.id.about:
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
         }
 

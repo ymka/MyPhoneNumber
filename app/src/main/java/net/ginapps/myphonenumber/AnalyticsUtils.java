@@ -13,6 +13,8 @@ public class AnalyticsUtils {
 
     public static final String sShareEvent = "Share";
     public static final String sCopyToClipboard = "Copy to clipboard";
+    public static final String sSendEmail = "Send email";
+    public static final String sSetNumber = "Set number";
 
     private static final String sApplicationEvent = "Application";
     private static final String sWidgetEvent = "Widget";
