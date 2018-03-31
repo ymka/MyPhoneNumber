@@ -31,7 +31,7 @@
     <string name="about">Про додаток</string>
     <string name="app_name_label">Iм\'я додатку: %s</string>
     <string name="app_version">Версiя додатку: %s</string>
-    <string name="send_email">Вiдправити емейл</string>
+    <string name="send_feedback">Вiдправити вiдгук</string>
     <string name="email_subject">Покращення додатку. Версiя %s</string>
     <string name="send_email_error">Email-додаток вiдсутнiй.</string>
 </resources>

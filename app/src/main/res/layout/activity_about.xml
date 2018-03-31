@@ -28,7 +28,7 @@
         android:id="@+id/sendEmail"
         android:layout_width="match_parent"
         android:layout_height="@dimen/default_min_clickable_element_size"
-        android:text="@string/send_email"
+        android:text="@string/send_feedback"
         android:textColor="@android:color/white"
         android:layout_weight="0"/>
 
