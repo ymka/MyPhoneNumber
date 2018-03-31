@@ -36,4 +36,6 @@
     <string name="send_email_error">Email-приложение отсутствует.</string>
     <string name="label_settings">Настройки</string>
     <string name="analytics_label">Оповещения о сбоях</string>
+    <string name="analytics_info_message">Вы можете отключить отправку уведомлений о сбоях в настройках. Приложение не собирает никакой личной информации.</string>
+    <string name="button_ok">Хорошо</string>
 </resources>

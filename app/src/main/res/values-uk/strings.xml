@@ -36,4 +36,6 @@
     <string name="send_email_error">Email-додаток вiдсутнiй.</string>
     <string name="label_settings">Налаштування</string>
     <string name="analytics_label">Повідомлення про збої</string>
+    <string name="analytics_info_message">Ви можете вимкнути сповіщення про збої в налаштуваннях. Додаток не збирає ніякої особистої інформації.</string>
+    <string name="button_ok">Добре</string>
 </resources>

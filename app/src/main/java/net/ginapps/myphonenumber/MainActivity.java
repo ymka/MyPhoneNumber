@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.ginapps.myphonenumber.analytics.Analytics;
+import net.ginapps.myphonenumber.analytics.AnalyticsInformer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new AnalyticsInformer().showDialogIfNeeded(this);
         analytics = ((MyPhoneApplication) getApplicationContext()).getAnalytics();
         setContentView(R.layout.activity_main);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recylerView);

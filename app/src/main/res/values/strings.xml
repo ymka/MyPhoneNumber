@@ -36,4 +36,6 @@
     <string name="send_email_error">Can\'n find an email app.</string>
     <string name="label_settings">Settings</string>
     <string name="analytics_label">Crashes notifications</string>
+    <string name="analytics_info_message">You can disable sending of crashes notifications in settings. Application doesn\'t collect any personal information.</string>
+    <string name="button_ok">OK</string>
 </resources>
