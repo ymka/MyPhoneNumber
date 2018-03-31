@@ -14,12 +14,11 @@ import android.support.v4.content.ContextCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
-import net.ginapps.myphonenumber.AnalyticsUtils;
+import net.ginapps.myphonenumber.MyPhoneApplication;
 import net.ginapps.myphonenumber.PhoneData;
 import net.ginapps.myphonenumber.R;
 import net.ginapps.myphonenumber.WidgetController;
+import net.ginapps.myphonenumber.analytics.Analytics;
 
 import timber.log.Timber;
 
@@ -43,7 +42,8 @@ public abstract class WidgetProvider extends AppWidgetProvider {
                     ClipData clipData = ClipData.newPlainText(context.getString(R.string.clip_label), phoneNumber);
                     clipboard.setPrimaryClip(clipData);
                     Toast.makeText(context, R.string.phone_copy_toast, Toast.LENGTH_SHORT).show();
-                    AnalyticsUtils.sendWidgetStatistic(FirebaseAnalytics.getInstance(context), AnalyticsUtils.sCopyToClipboard);
+                    Analytics analytics = ((MyPhoneApplication) context.getApplicationContext()).getAnalytics();
+                    analytics.sendWidgetStatistic(Analytics.sCopyToClipboard);
                     break;
                 default:
                     break;

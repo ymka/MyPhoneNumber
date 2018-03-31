@@ -31,7 +31,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
+import net.ginapps.myphonenumber.analytics.Analytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,14 +49,14 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     private static final String sKeyKeepScreenOn = "net.ginapps.myphonenumber.MainActivity.sKeyKeepScreenOn";
     private static final int sRequestAppSettings = 1233;
     private PhoneNumbersAdapter mPhoneNumbersAdapter;
-    private FirebaseAnalytics mFirebaseAnalytics;
     private RatingStatus mRatingStatus;
-    PhoneNumberDelegate mPhoneNumberDelegate;
+    private PhoneNumberDelegate mPhoneNumberDelegate;
+    private Analytics analytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        analytics = ((MyPhoneApplication) getApplicationContext()).getAnalytics();
         setContentView(R.layout.activity_main);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recylerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         ClipData clipData = ClipData.newPlainText(getString(R.string.clip_label), phoneNumber);
         clipboard.setPrimaryClip(clipData);
         Toast.makeText(this, R.string.phone_copy_toast, Toast.LENGTH_SHORT).show();
-        AnalyticsUtils.sendApplicationStatistic(mFirebaseAnalytics, AnalyticsUtils.sCopyToClipboard);
+        analytics.sendApplicationStatistic(Analytics.sCopyToClipboard);
     }
 
     @Override
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         sendIntent.putExtra(Intent.EXTRA_TEXT, phoneNumber);
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, getString(R.string.share_text_label)));
-        AnalyticsUtils.sendApplicationStatistic(mFirebaseAnalytics, AnalyticsUtils.sShareEvent);
+        analytics.sendApplicationStatistic(Analytics.sShareEvent);
     }
 
     @Override
@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         editor.putString(String.valueOf(phoneData.getSlotIndex()), phoneNumber).apply();
         mPhoneNumbersAdapter.resetPhonesData(mPhoneNumberDelegate.getSimsData());
         mPhoneNumbersAdapter.notifyDataSetChanged();
-        AnalyticsUtils.sendApplicationStatistic(mFirebaseAnalytics, AnalyticsUtils.sSetNumber);
+        analytics.sendApplicationStatistic(Analytics.sSetNumber);
     }
 
     private void showRatingDialog() {
@@ -360,8 +360,8 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
                 item.setChecked(checked);
                 setKeepScreenOn(checked);
                 break;
-            case R.id.about:
-                startActivity(new Intent(this, AboutActivity.class));
+            case R.id.settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
         }
 

@@ -34,4 +34,6 @@
     <string name="send_feedback">Отправить отзыв</string>
     <string name="email_subject">Улучшение приложения. Версия %s</string>
     <string name="send_email_error">Email-приложение отсутствует.</string>
+    <string name="label_settings">Настройки</string>
+    <string name="analytics_label">Оповещения о сбоях</string>
 </resources>

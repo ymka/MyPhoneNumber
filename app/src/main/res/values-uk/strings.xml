@@ -34,4 +34,6 @@
     <string name="send_feedback">Вiдправити вiдгук</string>
     <string name="email_subject">Покращення додатку. Версiя %s</string>
     <string name="send_email_error">Email-додаток вiдсутнiй.</string>
+    <string name="label_settings">Налаштування</string>
+    <string name="analytics_label">Повідомлення про збої</string>
 </resources>

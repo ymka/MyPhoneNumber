@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
 /**
  * Created by Alexander Kondenko.
  */
@@ -44,7 +42,6 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void sendEmail() {
-        AnalyticsUtils.sendApplicationStatistic(FirebaseAnalytics.getInstance(this), AnalyticsUtils.sSendEmail);
         Intent intent = new Intent(Intent.ACTION_SENDTO);
         intent.setData(Uri.parse("mailto:"));
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{sEmail});

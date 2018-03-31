@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/default_min_clickable_element_size">
+
+        <TextView
+            android:id="@+id/analyticsLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:textColor="@color/selector_enable_text"
+            android:text="@string/analytics_label"/>
+
+        <Switch
+            android:id="@+id/analyticsSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/aboutView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/default_min_clickable_element_size"
+        android:textSize="14sp"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:textColor="@color/primary_text"
+        android:text="@string/about"/>
+
+</LinearLayout>

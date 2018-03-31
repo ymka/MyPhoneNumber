@@ -23,6 +23,9 @@
         <activity android:name=".AboutActivity"
             android:label="@string/about"/>
 
+        <activity android:name=".SettingsActivity"
+            android:label="@string/label_settings"/>
+
         <activity
             android:name=".widget.DarkPhoneWidgetConfigureActivity"
             android:label="@string/activity_label_widget_settings">
