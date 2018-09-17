@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new AnalyticsInformer().showDialogIfNeeded(this);
+
+        // doesn't show dialog about analytics
+//        new AnalyticsInformer().showDialogIfNeeded(this);
         analytics = ((MyPhoneApplication) getApplicationContext()).getAnalytics();
         setContentView(R.layout.activity_main);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recylerView);
@@ -362,8 +364,8 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
                 item.setChecked(checked);
                 setKeepScreenOn(checked);
                 break;
-            case R.id.settings:
-                startActivity(new Intent(this, SettingsActivity.class));
+            case R.id.about:
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
         }
 
