@@ -16,14 +16,15 @@ public class PhoneData {
     private final String mPhoneNumber;
     private final String mOperatorName;
     private final String mCountryIso;
+    private final String mIccId;
     private int mColor = -1;
-    private int mSlotIndex = 0;
     private boolean mShowEditNumber = false;
 
-    private PhoneData(String phoneNumber, String operatorName, String countryIso) {
+    private PhoneData(String phoneNumber, String operatorName, String countryIso, String iccId) {
         mPhoneNumber = phoneNumber;
         mOperatorName = operatorName;
         mCountryIso = countryIso;
+        mIccId = iccId;
     }
 
     public String getPhoneNumber() {
@@ -116,12 +117,8 @@ public class PhoneData {
         mShowEditNumber = showEditNumber;
     }
 
-    public int getSlotIndex() {
-        return mSlotIndex;
-    }
-
-    private void setSlotIndex(int slotIndex) {
-        mSlotIndex = slotIndex;
+    public String getIccId() {
+        return mIccId;
     }
 
     public String getCountryIso() {
@@ -135,6 +132,7 @@ public class PhoneData {
         private String mCountryIso;
         private int mColor = -1;
         private int mSlotIndex = 0;
+        private String mIccId = "";
 
         public Builder(Context context) {
             mContext = context;
@@ -170,20 +168,27 @@ public class PhoneData {
             return this;
         }
 
+        public void setIccId(String iccId) {
+            mIccId = iccId;
+        }
+
         public PhoneData build() {
             boolean phoneNumberEmpty = mPhoneNumber == null || mPhoneNumber.isEmpty();
             if (phoneNumberEmpty) {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-                String key = String.valueOf(mSlotIndex);
-                if (preferences.contains(key)) {
-                    mPhoneNumber = preferences.getString(key, "");
+                if (preferences.contains(mIccId)) {
+                    mPhoneNumber = preferences.getString(mIccId, "");
+                } else {
+                    String key = String.valueOf(mSlotIndex);
+                    if (preferences.contains(key)) {
+                        mPhoneNumber = preferences.getString(key, "");
+                    }
                 }
             }
 
-            PhoneData phoneData = new PhoneData(mPhoneNumber, mOperatorName, mCountryIso);
+            PhoneData phoneData = new PhoneData(mPhoneNumber, mOperatorName, mCountryIso, mIccId);
             phoneData.setColor(mColor);
             phoneData.setShowEditNumber(phoneNumberEmpty);
-            phoneData.setSlotIndex(mSlotIndex);
 
             return phoneData;
         }

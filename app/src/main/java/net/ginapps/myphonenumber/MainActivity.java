@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
 //        new AnalyticsInformer().showDialogIfNeeded(this);
         analytics = ((MyPhoneApplication) getApplicationContext()).getAnalytics();
         setContentView(R.layout.activity_main);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recylerView);
+        RecyclerView recyclerView = findViewById(R.id.recylerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         mPhoneNumbersAdapter = new PhoneNumbersAdapter(this);
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
             showWarningDialog();
         }
 
-        TextView textLabel = (TextView) findViewById(R.id.textLabel);
+        TextView textLabel = findViewById(R.id.textLabel);
         if (!mPhoneNumberDelegate.hasActiveSim()) {
             textLabel.setVisibility(View.VISIBLE);
             textLabel.setText(R.string.label_no_active_card);
@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         int length = mainText.length() - requestText.length();
         builder.setSpan(new TextAppearanceSpan(MainActivity.this, R.style.RequestText), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setSpan(new TextAppearanceSpan(MainActivity.this, R.style.RequestPermissionText), length, mainText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        TextView requestLabel = (TextView) findViewById(R.id.textLabel);
+        TextView requestLabel = findViewById(R.id.textLabel);
         requestLabel.setText(builder);
         requestLabel.setVisibility(View.VISIBLE);
         requestLabel.setOnClickListener(new View.OnClickListener() {
@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     public void onPhoneNumberSaved(int position, String phoneNumber) {
         PhoneData phoneData = mPhoneNumbersAdapter.getItemOnPosition(position);
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-        editor.putString(String.valueOf(phoneData.getSlotIndex()), phoneNumber).apply();
+        editor.putString(phoneData.getIccId(), phoneNumber).apply();
         mPhoneNumbersAdapter.resetPhonesData(mPhoneNumberDelegate.getSimsData());
         mPhoneNumbersAdapter.notifyDataSetChanged();
         analytics.sendApplicationStatistic(Analytics.sSetNumber);

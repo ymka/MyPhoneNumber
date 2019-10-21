@@ -54,6 +54,7 @@ public class DefaultPhoneNumberDelegate implements PhoneNumberDelegate {
         builder.setCountryIso(info.getCountryIso());
         builder.setColor(info.getIconTint());
         builder.setSlotIndex(info.getSimSlotIndex());
+        builder.setIccId(info.getIccId());
 
         return builder.build();
     }

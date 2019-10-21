@@ -44,11 +44,13 @@ public class LegacyPhoneNumberDelegate implements PhoneNumberDelegate {
         String line1Number = mTelephonyManager.getLine1Number();
         String simOperatorName = mTelephonyManager.getSimOperatorName();
         String countryIso = mTelephonyManager.getSimCountryIso();
+        String iccId = mTelephonyManager.getSubscriberId();
 
         PhoneData.Builder builder = new PhoneData.Builder(mContext);
         builder.setPhoneNumber(line1Number);
         builder.setOperatorName(simOperatorName);
         builder.setCountryIso(countryIso);
+        builder.setIccId(iccId);
 
         return builder.build();
     }
