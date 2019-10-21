@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         android:layout_weight="2"/>
 
-    <android.support.v7.widget.AppCompatButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sendEmail"
         android:layout_width="match_parent"
         android:layout_height="@dimen/default_min_clickable_element_size"

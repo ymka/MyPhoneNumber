@@ -9,8 +9,8 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.annotation.LayoutRes;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.LayoutRes;
+import androidx.core.content.ContextCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 

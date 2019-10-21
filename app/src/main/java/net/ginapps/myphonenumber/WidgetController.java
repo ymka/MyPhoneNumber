@@ -12,12 +12,10 @@ import java.util.List;
  */
 public class WidgetController {
 
-    private final Context mContext;
     private final PhoneNumberDelegate mNumberDelegate;
     private final SharedPreferences mPreferences;
 
     public WidgetController(Context context) {
-        mContext = context;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             mNumberDelegate = new DefaultPhoneNumberDelegate(context);
         } else {

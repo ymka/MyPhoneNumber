@@ -1,9 +1,10 @@
 package net.ginapps.myphonenumber;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.telephony.TelephonyManager;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class LegacyPhoneNumberDelegate implements PhoneNumberDelegate {
         return phonesData;
     }
 
+    @SuppressLint("MissingPermission")
     private PhoneData getPhoneData() {
         String line1Number = mTelephonyManager.getLine1Number();
         String simOperatorName = mTelephonyManager.getSimOperatorName();

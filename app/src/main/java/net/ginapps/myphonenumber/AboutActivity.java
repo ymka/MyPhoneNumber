@@ -3,8 +3,8 @@ package net.ginapps.myphonenumber;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -22,15 +22,15 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        TextView appNameView = (TextView) findViewById(R.id.appName);
+        TextView appNameView = findViewById(R.id.appName);
         appNameView.setText(getString(R.string.app_name_label, getString(R.string.app_name)));
 
-        TextView appVersionView = (TextView) findViewById(R.id.appVersion);
+        TextView appVersionView = findViewById(R.id.appVersion);
         appVersionView.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
 
         findViewById(R.id.sendEmail).setOnClickListener(new View.OnClickListener() {

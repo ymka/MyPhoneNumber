@@ -7,8 +7,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
+import androidx.annotation.NonNull;
+import com.google.android.material.textfield.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -59,13 +59,13 @@ public class EditPhoneNumberDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = View.inflate(getActivity(), R.layout.layout_input_phone, null);
-        mPhoneNumber = (EditText) view.findViewById(R.id.phoneEditText);
+        mPhoneNumber = view.findViewById(R.id.phoneEditText);
         if (!phoneNumber.isEmpty()) {
             mPhoneNumber.setText(phoneNumber);
             mPhoneNumber.setSelection(0, phoneNumber.length());
         }
 
-        mPhoneInputLayout = (TextInputLayout) view.findViewById(R.id.phoneInputLayout);
+        mPhoneInputLayout = view.findViewById(R.id.phoneInputLayout);
         builder.setTitle(R.string.dialog_title);
         if (arguments.getBoolean(KEY_SHOW_DESCRIPTION, false)) {
             builder.setMessage(R.string.dialog_description);

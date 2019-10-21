@@ -66,12 +66,12 @@ public class PhoneData {
         if (string.length() <= 6) {
             builder.append(string.substring(0, 3))
                    .append(' ')
-                   .append(string.substring(3, string.length()));
+                   .append(string.substring(3));
         } else if (string.length() == 7){
             builder.append(string.substring(0, 3))
                    .append(string.substring(3, 5))
                    .append(' ')
-                   .append(string.substring(5, string.length()));
+                   .append(string.substring(5));
         } else {
             int start = 0;
             for (int i = string.length() - 3, j = string.length(); i >= 0; i -= 3, j -= 3) {

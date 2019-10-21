@@ -1,10 +1,11 @@
 package net.ginapps.myphonenumber;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 
@@ -25,12 +26,13 @@ public class DefaultPhoneNumberDelegate implements PhoneNumberDelegate {
         mManager = SubscriptionManager.from(context);
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public boolean hasActiveSim() {
         return mManager.getActiveSubscriptionInfoCount() != 0;
     }
 
-    @Nullable
+    @SuppressLint("MissingPermission")
     @Override
     public List<PhoneData> getSimsData() {
         List<SubscriptionInfo> infoList = mManager.getActiveSubscriptionInfoList();
@@ -56,7 +58,7 @@ public class DefaultPhoneNumberDelegate implements PhoneNumberDelegate {
         return builder.build();
     }
 
-    @Nullable
+    @SuppressLint("MissingPermission")
     @Override
     public PhoneData getSimBySlotIndex(int index) {
         PhoneData phoneData = null;
