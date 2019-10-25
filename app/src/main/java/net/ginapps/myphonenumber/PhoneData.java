@@ -182,6 +182,7 @@ public class PhoneData {
                     String key = String.valueOf(mSlotIndex);
                     if (preferences.contains(key)) {
                         mPhoneNumber = preferences.getString(key, "");
+                        preferences.edit().putString(mIccId, mPhoneNumber).apply();
                     }
                 }
             }
