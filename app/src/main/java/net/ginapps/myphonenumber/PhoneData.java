@@ -3,6 +3,7 @@ package net.ginapps.myphonenumber;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
@@ -182,7 +183,10 @@ public class PhoneData {
                     String key = String.valueOf(mSlotIndex);
                     if (preferences.contains(key)) {
                         mPhoneNumber = preferences.getString(key, "");
-                        preferences.edit().putString(mIccId, mPhoneNumber).apply();
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.remove(key);
+                        editor.putString(mIccId, mPhoneNumber);
+                        editor.apply();
                     }
                 }
             }
