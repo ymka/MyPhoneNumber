@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         if (isPermissionGranted) {
             initData();
         } else if (savedInstanceState == null) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
+            PermissionUtils.Companion.requestPermissions(this);
         }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         requestLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
+                PermissionUtils.Companion.requestPermissions(MainActivity.this);
             }
         });
     }

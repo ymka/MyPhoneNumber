@@ -2,6 +2,7 @@
 <manifest package="net.ginapps.myphonenumber"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
@@ -12,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -28,7 +30,8 @@
 
         <activity
             android:name=".widget.DarkPhoneWidgetConfigureActivity"
-            android:label="@string/activity_label_widget_settings">
+            android:label="@string/activity_label_widget_settings"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
@@ -36,13 +39,15 @@
 
         <activity
             android:name=".widget.WhitePhoneWidgetConfigureActivity"
-            android:label="@string/activity_label_widget_settings">
+            android:label="@string/activity_label_widget_settings"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
 
-        <receiver android:name=".widget.DarkWidgetProvider">
+        <receiver android:name=".widget.DarkWidgetProvider"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -51,7 +56,8 @@
                        android:resource="@xml/dark_main_widget_info"/>
         </receiver>
 
-        <receiver android:name=".widget.WhiteWidgetProvider">
+        <receiver android:name=".widget.WhiteWidgetProvider"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>

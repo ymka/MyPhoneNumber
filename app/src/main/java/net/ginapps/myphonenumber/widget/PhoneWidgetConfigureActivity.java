@@ -24,6 +24,7 @@ import com.crashlytics.android.answers.CustomEvent;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import net.ginapps.myphonenumber.BuildConfig;
+import net.ginapps.myphonenumber.PermissionUtils;
 import net.ginapps.myphonenumber.PhoneData;
 import net.ginapps.myphonenumber.R;
 import net.ginapps.myphonenumber.WidgetController;
@@ -51,7 +52,7 @@ public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
                 initLayout();
                 sendStatistic();
             } else if (savedInstanceState == null) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
+                PermissionUtils.Companion.requestPermissions(this);
             }
         }
     }

@@ -9,8 +9,11 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+
 import androidx.annotation.LayoutRes;
 import androidx.core.content.ContextCompat;
+
+import android.os.Build;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -86,8 +89,12 @@ public abstract class WidgetProvider extends AppWidgetProvider {
         intent.setAction(sActionCopyToClipboard);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
         intent.putExtra(sExtraPhoneNumber, line1Number);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        } else {
+            return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
 
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     public static PendingIntent getSharePhonePendingIntent(Context context, String phoneNumber) {
@@ -97,7 +104,11 @@ public abstract class WidgetProvider extends AppWidgetProvider {
         sendIntent.putExtra(Intent.EXTRA_TEXT, phoneNumber);
         sendIntent.setType("text/plain");
 
-        return PendingIntent.getActivity(context, 0, Intent.createChooser(sendIntent, context.getString(R.string.share_text_label)), PendingIntent.FLAG_UPDATE_CURRENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return PendingIntent.getActivity(context, 0, Intent.createChooser(sendIntent, context.getString(R.string.share_text_label)), PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        } else {
+            return PendingIntent.getActivity(context, 0, Intent.createChooser(sendIntent, context.getString(R.string.share_text_label)), PendingIntent.FLAG_UPDATE_CURRENT);
+        }
     }
 
     @Override
@@ -112,5 +123,5 @@ public abstract class WidgetProvider extends AppWidgetProvider {
     @LayoutRes
     protected abstract int getLayoutDisabledWidgetId();
 
-    protected abstract Class<? extends  WidgetProvider> getProviderClass();
+    protected abstract Class<? extends WidgetProvider> getProviderClass();
 }
