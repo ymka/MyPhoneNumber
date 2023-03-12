@@ -30,7 +30,7 @@
                 android:text="Life"
                 android:textColor="@color/operatorText"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/phoneNumber"
                 style="@style/PhoneText"
                 android:layout_width="wrap_content"

@@ -13,6 +13,9 @@
         <item name="android:textSize">40sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/phoneText</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="autoSizeStepGranularity">2sp</item>
+        <item name="android:lines">1</item>
     </style>
 
     <style name="WidgetButtonParent">
