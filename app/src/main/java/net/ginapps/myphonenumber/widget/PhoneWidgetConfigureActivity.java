@@ -19,8 +19,6 @@ import android.widget.RemoteViews;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.CustomEvent;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import net.ginapps.myphonenumber.BuildConfig;
@@ -63,8 +61,6 @@ public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, sSetupWidgetEvent);
         FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-        CustomEvent event = new CustomEvent(sSetupWidgetEvent);
-        Answers.getInstance().logCustom(event);
     }
 
     private void initLayout() {

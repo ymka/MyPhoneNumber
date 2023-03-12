@@ -4,11 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.answers.Answers
-import com.crashlytics.android.answers.CustomEvent
 import com.google.firebase.analytics.FirebaseAnalytics
-import io.fabric.sdk.android.Fabric
 import net.ginapps.myphonenumber.BuildConfig
 
 /**
@@ -25,26 +21,18 @@ class Analytics(context: Context) {
 
         private const val sApplicationEvent = "Application"
         private const val sWidgetEvent = "Widget"
-        private const val sEventName = "EVENT_NAME"
     }
 
     var enable: Boolean
     private set
 
     private val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-    private val answers: Answers?
     private val firebaseAnalytics: FirebaseAnalytics
 
     init {
         enable = !BuildConfig.DEBUG && sharedPreferences.getBoolean(ANALYTIC_ENABLE, true)
         firebaseAnalytics = FirebaseAnalytics.getInstance(context)
         firebaseAnalytics.setAnalyticsCollectionEnabled(enable)
-        if (enable) {
-            Fabric.with(context, Crashlytics())
-            answers = Answers.getInstance()
-        } else {
-            answers = null
-        }
     }
 
     fun setAvalability(value: Boolean) {
@@ -70,11 +58,6 @@ class Analytics(context: Context) {
             putString(FirebaseAnalytics.Param.ITEM_NAME, name)
         }
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-
-        val event = CustomEvent(eventId).apply {
-            putCustomAttribute(sEventName, name)
-        }
-        answers?.logCustom(event)
     }
 
     private inline fun call(body: () -> Unit) {
