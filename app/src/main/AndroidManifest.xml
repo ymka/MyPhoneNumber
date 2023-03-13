@@ -67,8 +67,8 @@
         </receiver>
 
         <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="3b6ffd54c7cea129444cca7097ae2df17fdcfe1b" />
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9540034493302123~5507992254"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
