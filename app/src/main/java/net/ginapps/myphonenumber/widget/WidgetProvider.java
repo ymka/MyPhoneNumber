@@ -1,6 +1,5 @@
 package net.ginapps.myphonenumber.widget;
 
-import android.Manifest;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -8,16 +7,15 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 
 import androidx.annotation.LayoutRes;
-import androidx.core.content.ContextCompat;
 
 import android.os.Build;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import net.ginapps.myphonenumber.MyPhoneApplication;
+import net.ginapps.myphonenumber.PermissionUtils;
 import net.ginapps.myphonenumber.PhoneData;
 import net.ginapps.myphonenumber.R;
 import net.ginapps.myphonenumber.WidgetController;
@@ -56,7 +54,7 @@ public abstract class WidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+        if (PermissionUtils.Companion.isPermissionsGranted(context)) {
             return;
         }
 

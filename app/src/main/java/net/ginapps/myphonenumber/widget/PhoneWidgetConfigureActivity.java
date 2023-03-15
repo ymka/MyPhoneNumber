@@ -46,7 +46,7 @@ public abstract class PhoneWidgetConfigureActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             mWidgetController = new WidgetController(this);
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+            if (PermissionUtils.Companion.isPermissionsGranted(this)) {
                 initLayout();
                 sendStatistic();
             } else if (savedInstanceState == null) {

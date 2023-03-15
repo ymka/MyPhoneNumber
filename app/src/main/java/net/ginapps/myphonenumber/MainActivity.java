@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         mPhoneNumbersAdapter = new PhoneNumbersAdapter(this);
         mPhoneNumbersAdapter.setActionListener(this);
         recyclerView.setAdapter(mPhoneNumbersAdapter);
-        boolean isPermissionGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
+        boolean isPermissionGranted = PermissionUtils.Companion.isPermissionsGranted(this);
         Timber.d("On create. Permission is granted %s", isPermissionGranted);
         if (isPermissionGranted) {
             initData();
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case sRequestAppSettings:
-                if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                if (PermissionUtils.Companion.isPermissionsGranted(MainActivity.this)) {
                     initData();
                 } else {
                     showRequestPermissionLabel();
