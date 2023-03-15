@@ -66,4 +66,12 @@ class Analytics(context: Context) {
         }
     }
 
+    fun sendPhoneStatusEvent(phoneNumberIsEmpty: Boolean) {
+        val bundle = Bundle().apply {
+            putBoolean("empty", phoneNumberIsEmpty)
+        }
+
+        firebaseAnalytics.logEvent("PhoneNumberState", bundle)
+    }
+
 }

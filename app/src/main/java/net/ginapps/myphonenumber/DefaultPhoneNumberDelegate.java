@@ -5,9 +5,10 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
+
+import net.ginapps.myphonenumber.analytics.Analytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,12 @@ public class DefaultPhoneNumberDelegate implements PhoneNumberDelegate {
 
     private final Context mContext;
     private final SubscriptionManager mManager;
+    private final Analytics analytics;
 
     public DefaultPhoneNumberDelegate(Context context) {
         mContext = context;
         mManager = SubscriptionManager.from(context);
+        analytics = ((MyPhoneApplication) context.getApplicationContext()).getAnalytics();
     }
 
     @SuppressLint("MissingPermission")
@@ -48,6 +51,7 @@ public class DefaultPhoneNumberDelegate implements PhoneNumberDelegate {
 
     @NonNull
     private PhoneData createPhoneDate(SubscriptionInfo info) {
+        analytics.sendPhoneStatusEvent(info.getNumber() == null || info.getNumber().isEmpty());
         PhoneData.Builder builder = new PhoneData.Builder(mContext);
         builder.setPhoneNumber(info.getNumber());
         builder.setOperatorName(info.getDisplayName().toString());

@@ -26,6 +26,7 @@ android {
             debuggable false
         }
     }
+    namespace 'net.ginapps.myphonenumber'
 }
 
 ext {
