@@ -7,13 +7,14 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-
-import androidx.annotation.LayoutRes;
-
 import android.os.Build;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import androidx.annotation.LayoutRes;
+import androidx.appcompat.app.AppCompatActivity;
+
+import net.ginapps.myphonenumber.MainActivity;
 import net.ginapps.myphonenumber.MyPhoneApplication;
 import net.ginapps.myphonenumber.PermissionUtils;
 import net.ginapps.myphonenumber.PhoneData;
@@ -54,7 +55,7 @@ public abstract class WidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        if (PermissionUtils.Companion.isPermissionsGranted(context)) {
+        if (!PermissionUtils.Companion.isPermissionsGranted(context)) {
             return;
         }
 
