@@ -1,41 +1,39 @@
 {
   "project_info": {
-    "project_number": "700169264660",
-    "firebase_url": "https://myphonenumber-98737.firebaseio.com",
-    "project_id": "myphonenumber-98737",
-    "storage_bucket": "myphonenumber-98737.appspot.com"
+    "project_number": "311879718746",
+    "project_id": "my-phone-number-96d18",
+    "storage_bucket": "my-phone-number-96d18.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:700169264660:android:a06c84437f127455",
+        "mobilesdk_app_id": "1:311879718746:android:3ce7edf165ac640f6bc563",
         "android_client_info": {
           "package_name": "net.ginapps.myphonenumber"
         }
       },
       "oauth_client": [
         {
-          "client_id": "700169264660-v7dku6ipeciva5dgkr340sn3bj58msr5.apps.googleusercontent.com",
+          "client_id": "311879718746-2dovk8nhul1eck13jiea788j4l40c45v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyChYkNnQfMAxXYoRZsujni_7R-Qkzc6kvc"
+          "current_key": "AIzaSyDxIpVuMYlfrUqET1XzG-BXRUhPaxnVPmc"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "311879718746-2dovk8nhul1eck13jiea788j4l40c45v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-9540034493302123~5507992254"
     }
   ],
   "configuration_version": "1"
