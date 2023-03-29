@@ -14,8 +14,8 @@ android {
         applicationId "net.ginapps.myphonenumber"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 23
-        versionName "1.4.6"
+        versionCode 24
+        versionName "1.4.7"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
