@@ -1,12 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorButtonNormal">@color/colorAccent</item>
     </style>
 
     <style name="PhoneText">
@@ -26,13 +26,21 @@
         <item name="android:background">?android:selectableItemBackground</item>
     </style>
 
-    <style name="RequestText" parent="TextAppearance.AppCompat.Caption">
+    <style name="RequestText" parent="android:TextAppearance.Material.Caption">
         <item name="android:textColor">@color/primary_text</item>
     </style>
 
-    <style name="RequestPermissionText" parent="TextAppearance.AppCompat.Body2">
+    <style name="RequestPermissionText" parent="android:TextAppearance.Material.Body2">
         <item name="android:textColor">@color/selector_request_permission</item>
         <item name="android:textSize">@dimen/request_permissions_text</item>
+    </style>
+
+    <style name="ToolbarColoredBackArrow" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/toolbarText</item>
+    </style>
+
+    <style name="ToolbarPopup" parent="ThemeOverlay.AppCompat">
+        <item name="colorControlNormal">@color/colorAccent</item>
     </style>
 
 </resources>

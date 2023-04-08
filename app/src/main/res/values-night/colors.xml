@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#232F35</color>
+    <color name="colorPrimaryDark">#1F282C</color>
+    <color name="colorAccent">#A5D4EA</color>
+    <color name="phoneText">#648798</color>
+    <color name="divider">#575656</color>
+    <color name="toolbarText">#B3FFFDFD</color>
+    <color name="operatorText">#B3FFFFFF</color>
+    <color name="operatorBackground1">#00433C</color>
+    <color name="operatorBackground2">#673900</color>
+    <color name="operatorBackground3">#19401B</color>
+    <color name="icon">#757575</color>
+    <color name="primary_text">#B3FFFDFD</color>
+    <color name="disable_text">#757575</color>
+    <color name="request_permissions_text">#B33C9E41</color>
+    <color name="request_permissions_text_pressed">#B31C5020</color>
+</resources>

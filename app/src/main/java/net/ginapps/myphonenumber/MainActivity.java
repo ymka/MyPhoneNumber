@@ -1,6 +1,5 @@
 package net.ginapps.myphonenumber;
 
-import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -27,7 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
 //        new AnalyticsInformer().showDialogIfNeeded(this);
         analytics = ((MyPhoneApplication) getApplicationContext()).getAnalytics();
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
         RecyclerView recyclerView = findViewById(R.id.recylerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

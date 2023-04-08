@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="net.ginapps.myphonenumber.MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recylerView"
+    <include layout="@layout/app_toolbar" />
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:padding="@dimen/default_padding"
-        android:visibility="gone"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recylerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="32dp"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-9540034493302123/2090920602">
-    </com.google.android.gms.ads.AdView>
+        <TextView
+            android:id="@+id/textLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="@dimen/default_padding"
+            android:visibility="gone" />
 
-</FrameLayout>
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="32dp"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-9540034493302123/2090920602"/>
+
+    </FrameLayout>
+
+</LinearLayout>

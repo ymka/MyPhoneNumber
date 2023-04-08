@@ -32,23 +32,17 @@ public class PermissionDialog extends DialogFragment {
         builder.setTitle(R.string.title_permission_dialog);
         builder.setMessage(R.string.message_permission_dialog);
 
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (mListener != null) {
-                    mListener.onPisitiveButtonClicked();
-                }
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            if (mListener != null) {
+                mListener.onPisitiveButtonClicked();
             }
         });
 
-        builder.setNegativeButton(R.string.settings, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (mListener != null) {
-                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    intent.setData(Uri.fromParts(SCHEME, BuildConfig.APPLICATION_ID, null));
-                    mListener.onSettingsClicked(intent);
-                }
+        builder.setNegativeButton(R.string.settings, (dialog, which) -> {
+            if (mListener != null) {
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.setData(Uri.fromParts(SCHEME, BuildConfig.APPLICATION_ID, null));
+                mListener.onSettingsClicked(intent);
             }
         });
 

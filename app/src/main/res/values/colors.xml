@@ -6,6 +6,7 @@
     <color name="phoneText">#414141</color>
     <color name="divider">#EEEEEE</color>
     <color name="operatorText">#FFFFFF</color>
+    <color name="toolbarText">#FFFFFF</color>
     <color name="operatorBackground1">#00897B</color>
     <color name="operatorBackground2">#FB8C00</color>
     <color name="operatorBackground3">#43A047</color>
