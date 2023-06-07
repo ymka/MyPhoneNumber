@@ -26,16 +26,6 @@
             android:padding="@dimen/default_padding"
             android:visibility="gone" />
 
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="32dp"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-9540034493302123/2090920602"/>
-
     </FrameLayout>
 
 </LinearLayout>

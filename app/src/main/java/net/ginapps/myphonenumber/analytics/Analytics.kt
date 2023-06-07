@@ -21,6 +21,7 @@ class Analytics(context: Context) {
 
         private const val sApplicationEvent = "Application"
         private const val sWidgetEvent = "Widget"
+        private const val sAdsEvent = "Ads"
     }
 
     var enable: Boolean
@@ -49,6 +50,12 @@ class Analytics(context: Context) {
     fun sendWidgetStatistic(name: String) {
         call {
             sendStatistic(sWidgetEvent, name)
+        }
+    }
+
+    fun sendAdsEvent(name: String) {
+        call {
+            sendStatistic(sAdsEvent, name)
         }
     }
 

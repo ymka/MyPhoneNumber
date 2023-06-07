@@ -16,6 +16,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,15 +31,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
 
 import net.ginapps.myphonenumber.analytics.Analytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.List;
 
 import timber.log.Timber;
@@ -69,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
         RecyclerView recyclerView = findViewById(R.id.recylerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        mPhoneNumbersAdapter = new PhoneNumbersAdapter(this);
+        mPhoneNumbersAdapter = new PhoneNumbersAdapter(this, analytics);
         mPhoneNumbersAdapter.setActionListener(this);
         recyclerView.setAdapter(mPhoneNumbersAdapter);
         boolean isPermissionGranted = PermissionUtils.Companion.isPermissionsGranted(this);
@@ -106,11 +111,6 @@ public class MainActivity extends AppCompatActivity implements PhoneNumbersAdapt
 
         MobileAds.initialize(this, initializationStatus -> {
         });
-
-        AdView adView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-
     }
 
     @Override
