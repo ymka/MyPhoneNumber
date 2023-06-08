@@ -147,19 +147,33 @@ class PhoneNumbersAdapter(
     }
 
     override fun onCopyPhoneNumber(position: Int) {
-        mActionListener?.onCopyPhoneNumber(mPhoneData[position].phoneNumber)
+        val phoneNumber = if (position == 0) {
+            mPhoneData[position]
+        } else {
+            mPhoneData[position - 1]
+        }.phoneNumber
+
+        mActionListener?.onCopyPhoneNumber(phoneNumber)
     }
 
     override fun onSharePhoneNumber(position: Int) {
-        mActionListener?.onSharePhoneNumber(mPhoneData[position].phoneNumber)
+        val phoneNumber = if (position == 0) {
+            mPhoneData[position]
+        } else {
+            mPhoneData[position - 1]
+        }.phoneNumber
+
+        mActionListener?.onSharePhoneNumber(phoneNumber)
     }
 
     override fun onEditPhoneNumber(position: Int) {
         mActionListener?.onEditPhoneNumber(position)
     }
 
-    fun getItemOnPosition(position: Int): PhoneData {
-        return mPhoneData[position]
+    fun getItemOnPosition(position: Int): PhoneData = if (position == 0) {
+        mPhoneData[position]
+    } else {
+        mPhoneData[position - 1]
     }
 
     interface ActionListener {
